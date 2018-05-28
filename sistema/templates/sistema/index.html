@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>
+	<br>Alô Mundo
+</p>
+<a href="{% url 'sistema:estabelecimento_listar' %}">Estabelecimentos</a>
+<br>
+<a href="{% url 'sistema:predio_listar' %}">Predios</a>
+{% endblock %}
