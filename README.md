@@ -15,12 +15,11 @@ Python 3.6.1 ou ver superior
 Django==2.0.5
 django-widget-tweaks==1.4.2
 pytz==2018.4
-
 ```
 
 ### Instalando
 
-Segue um passo-a-passo de instalação
+Segue um passo a passo de instalação
 
 Este são os passos para rodar o sistema na sua máquina
 
@@ -39,6 +38,19 @@ myenv\Scripts\activate
 Instale os requerimentos mínimos automaticamente
 ```
 pip install -r requirements.txt
+```
+
+Crie um banco de dados
+```
+python manage.py makemigrations
+```
+```
+python manage.py migrate
+```
+Crie um usuário no banco de dados
+
+```
+python manage.py createsuperuser
 ```
 
 Execute o sistema no localhost
