@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Faça Login para acessar o sistema{% endblock %}
+
+{% block content %}
+  <h3>Login</h3>
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% include 'includes/form.html' with form=form %}
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
