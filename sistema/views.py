@@ -24,6 +24,8 @@ class EstabelecimentoCreateView(generic.CreateView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
 		return super().get_context_data(**context)
 
 class EstabelecimentoUpdateView(generic.UpdateView):
@@ -31,10 +33,11 @@ class EstabelecimentoUpdateView(generic.UpdateView):
 	template_name = 'gerenciamento/editar.html'
 	fields = ['nome']
 	success_url = reverse_lazy('sistema:estabelecimento_listar')
-
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
 		return super().get_context_data(**context)
 
 class EstabelecimentoDeleteView(generic.DeleteView):
@@ -44,6 +47,8 @@ class EstabelecimentoDeleteView(generic.DeleteView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
 		return super().get_context_data(**context)
 
 
@@ -63,6 +68,8 @@ class PredioCreateView(generic.CreateView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar Prédio"
+		context['breadcrumb_title'] = "Prédio"
+		context['breadcrumb_link'] = "predio_listar"
 		return super().get_context_data(**context)
 
 class PredioUpdateView(generic.UpdateView):
@@ -100,6 +107,8 @@ class SalaCreateView(generic.CreateView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar Sala"
+		context['breadcrumb_title'] = "Sala"
+		context['breadcrumb_link'] = "sala_listar"
 		return super().get_context_data(**context)
 
 class SalaUpdateView(generic.UpdateView):
@@ -137,6 +146,8 @@ class ConsumoCreateView(generic.CreateView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar consumo"
+		context['breadcrumb_title'] = "Consumo"
+		context['breadcrumb_link'] = "consumo_listar"
 		return super().get_context_data(**context)
 	# def get_form(self, form_class=None):
 	# 	form = super(ConsumoCreateView, self).get_form(form_class)

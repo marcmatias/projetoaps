@@ -6,13 +6,35 @@
 
 
 {% block content %}
-<div class="card">
-  <div class="card-body">
-    <form method="post">
-        {% include 'includes/form.html' with form=form %}
-        <input class="btn btn-primary" type="submit" value="Editar" />
-    </form>
+
+
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{% url 'sistema:home' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="../{{ breadcrumb_link }}">Tabelas {{ breadcrumb_title }}</a>
+    </li>
+    <li class="breadcrumb-item active">Forms</li>
+  </ol>
+  <!-- Example DataTables Card-->
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <i class="fa fa-fw fa-file"></i> {{ title }} </div>
+    <div class="card-body">
+      <div class="card">
+        <div class="card-body">
+          <form method="post">
+              {% include 'includes/form.html' with form=form %}
+              <input class="btn btn-primary" type="submit" value="Editar" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer small text-muted">&nbsp;</div>
   </div>
 </div>
-
 {% endblock %}

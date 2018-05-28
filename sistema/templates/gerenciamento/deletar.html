@@ -5,18 +5,37 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="card">
-    <div class="card-body">
-      <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-          <p> Você quer deletar "<b>{{ object }}</b>"?</p>
-          <input type="submit" class="btn btn-primary" value="Confirmar">
 
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{% url 'sistema:home' %}">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="../{{ breadcrumb_link }}">Tabelas {{ breadcrumb_title }}</a>
+    </li>
+    <li class="breadcrumb-item active">Forms</li>
+  </ol>
+  <!-- Example DataTables Card-->
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <i class="fa fa-fw fa-file"></i> {{ title }} </div>
+    <div class="card-body">
+      <div class="card">
+        <div class="card-body">
+          <form method="post">
+            <div class="form-group">
+              <p> Tem certeza que quer deletar "<b>{{ object }}</b>"?</p>
+              <input type="submit" class="btn btn-primary" value="Confirmar">
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
+    <div class="card-footer small text-muted">&nbsp;</div>
   </div>
 </div>
+
 {% endblock %}
