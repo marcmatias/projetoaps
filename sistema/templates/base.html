@@ -42,9 +42,17 @@
       {% block content %}
       {% endblock %}
     </div>
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>  <!-- JQUERY HERE -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/scripts.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+      $( "#id_data" ).datepicker({
+       todayHighlight: true,
+       format: 'dd/mm/yyyy'
+     });
+    </script>
     {% block javascript %}
     {% endblock %}
   </body>

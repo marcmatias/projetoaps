@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  Lista de Prédios Cadastrados
+  Lista de Salas Cadastradas
 {% endblock %}
 
 {% block content %}
@@ -9,12 +9,12 @@
   <div class="col-sm-1">
   </div>
   <div class="col-sm-10">
-    <a href="{% url 'sistema:predio_cadastrar' %}" class="btn btn-primary">Cadastrar Novo</a>
+    <a href="{% url 'sistema:sala_cadastrar' %}" class="btn btn-primary">Cadastrar Nova</a>
   </div>
   <div class="col-sm-1">
   </div>
 </div><br>
-  {% if predio_list %}
+  {% if sala_list %}
   <div class="row">
     <div class="col-sm-1">
     </div>
@@ -24,18 +24,18 @@
                 <thead class="thead-inverse">
                     <tr>
                       <th>Nome</th>
-                      <th>Estabelecimento</th>
+                      <th>Prédio</th>
                       <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                  {% for predio in predio_list %}
+                  {% for sala in sala_list %}
                     <tr>
-                      <td>{{ predio.nome }}</td>
-                      <td>{{ predio.estabelecimento }}</td>
+                      <td>{{ sala.nome }}</td>
+                      <td>{{ sala.predio }}</td>
                       <td>
-                        <a href="{% url 'sistema:predio_editar' predio.slug %}" class="btn btn-primary">Edit</a>
-                        <a href="{% url 'sistema:predio_deletar' predio.slug  %}" class="btn btn-danger">Del</a>
+                        <a href="{% url 'sistema:sala_editar' sala.slug %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'sistema:sala_deletar' sala.slug  %}" class="btn btn-danger">Del</a>
                       </td>
                     </tr>
                   {% empty %}
@@ -51,7 +51,7 @@
     </div>
   </div>
   {% else %}
-    <p class="text-center">Não há Prédios cadastrados</p>
+    <p class="text-center">Não há Salas cadastradas</p>
   {% endif %}
 
 {% endblock %}

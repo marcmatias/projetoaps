@@ -49,14 +49,14 @@ class Sala(models.Model):
 class Consumo(models.Model):
 	sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
 	slug = models.SlugField(max_length=100)
-	kWh = models.FloatField()
+	kwh = models.FloatField()
 	data = models.DateField()
 
 	class Meta:
 		unique_together = (("sala", "data"),)
 
 	def save(self, *args, **kwargs):
-		self.slug = slugify("%s %s %s" % (self.sala.predio.estabelecimento, self.sala.predio, self.sala))
+		self.slug = slugify("%s %s %s %s" %(self.sala.predio.estabelecimento, self.sala.predio, self.sala.nome, self.data))
 		super(Consumo, self).save(*args, **kwargs)
 
 	def __str__(self):
