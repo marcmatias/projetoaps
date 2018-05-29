@@ -30,7 +30,7 @@
                 <th>Nome</th>
                 <th>Ação</th>
               </tr>
-            </tfoot>
+            </thead>
             <tbody>
               {% for estabelecimento in estabelecimento_list %}
                 <tr>
@@ -42,7 +42,7 @@
                 </tr>
               {% empty %}
                 <tr>
-                  <td colspan="7" class="text-center bg-warning">No book</td>
+                  <td colspan="7" class="text-center bg-warning">Sem Estabelecimentos</td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -55,5 +55,12 @@
     <p class="text-center">Não há Estabelecimentos cadastrados</p>
   {% endif %}
 
+{% endblock %}
 
+
+{% block javascript %}
+<script type="text/javascript">
+  $('#collapseComponents').removeClass('collapse');
+  $('#collapse_gerenciar').removeAttr("data-toggle");
+</script>
 {% endblock %}

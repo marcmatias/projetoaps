@@ -24,6 +24,7 @@
           <form method="post">
             {% include 'includes/form.html' with form=form %}
             <input type="submit" class="btn btn-primary" value="Cadastrar" />
+            <a href="../{{ breadcrumb_link }}" class="btn btn-light">Voltar</a>
           </form>
         </div>
       </div>
@@ -33,4 +34,11 @@
 </div>
 
 
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  $('#collapseComponents').removeClass('collapse');
+  $('#collapse_gerenciar').removeAttr("data-toggle");
+</script>
 {% endblock %}

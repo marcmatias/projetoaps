@@ -50,7 +50,7 @@
             </a>
           </li> -->
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <a class="nav-link nav-link-collapse collapsed" id="collapse_gerenciar" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">Gerenciar</span>
             </a>
@@ -69,7 +69,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+          <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-file"></i>
               <span class="nav-link-text">Example Pages</span>
@@ -125,7 +125,7 @@
               <i class="fa fa-fw fa-link"></i>
               <span class="nav-link-text">Link</span>
             </a>
-          </li>
+          </li> -->
         </ul>
         <ul class="navbar-nav sidenav-toggler">
           <li class="nav-item">
@@ -200,8 +200,6 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
 
-      {% block javascript %}
-      {% endblock %}
 
       <script type="text/javascript">
         $( "#id_data" ).datepicker({
@@ -209,5 +207,7 @@
          format: 'dd/mm/yyyy'
        });
       </script>
+      {% block javascript %}
+      {% endblock %}
     </div>
   </body>
