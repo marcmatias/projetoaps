@@ -30,10 +30,10 @@ urlpatterns = [
 	path('consumo_cadastrar/', login_required(views.ConsumoCreateView.as_view()), name="consumo_cadastrar"),
 	path('consumo_editar_form/<slug:slug>', login_required(views.ConsumoUpdateView.as_view()), name="consumo_editar"),
 	path('consumo_deletar_form/<slug:slug>', login_required(views.ConsumoDeleteView.as_view()), name="consumo_deletar"),
-
+	# Login e Logout
 	path('login/', auth_views.login, name='login'),
 	path('logout/', auth_views.logout, {'next_page': reverse_lazy('sistema:login')}, name='logout'),
-
+	# Mudança de senha Pardão Django
 	path('password-change/', auth_views.PasswordChangeView.as_view(template_name='registration/password_form.html', success_url=reverse_lazy('sistema:home')), name='password_change'),
-    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'), name='password_change_done'),
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'), name='password_change_done')
 ]

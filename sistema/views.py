@@ -7,14 +7,25 @@ from .forms import *
 from django import forms
 
 
+
+
+# Fim de alterar usuário
+
 class IndexListView(generic.TemplateView):
 	template_name = 'sistema/index.html'
+	def get_context_data(self, **kwargs):
+		context = {}
+		context['consumo'] = Consumo.objects.all()
+		context['title'] = "Cadastrar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
+		return super().get_context_data(**context)
 
 # CRUD Estabelecimento
 
 class EstabelecimentoListView(generic.ListView):
     model = Estabelecimento
-    template_name = 'gerenciamento/estabelecimento_listar.html'
+    template_name = 'gerenciamento/listar/estabelecimento_listar.html'
 
 class EstabelecimentoCreateView(generic.CreateView):
 	model = Estabelecimento
@@ -58,7 +69,7 @@ class EstabelecimentoDeleteView(generic.DeleteView):
 
 class PredioListView(generic.ListView):
     model = Predio
-    template_name = 'gerenciamento/predio_listar.html'
+    template_name = 'gerenciamento/listar/predio_listar.html'
 
 class PredioCreateView(generic.CreateView):
 	model = Predio
@@ -97,7 +108,7 @@ class PredioDeleteView(generic.DeleteView):
 
 class SalaListView(generic.ListView):
     model = Sala
-    template_name = 'gerenciamento/sala_listar.html'
+    template_name = 'gerenciamento/listar/sala_listar.html'
 
 class SalaCreateView(generic.CreateView):
 	model = Sala
@@ -136,7 +147,7 @@ class SalaDeleteView(generic.DeleteView):
 
 class ConsumoListView(generic.ListView):
     model = Consumo
-    template_name = 'gerenciamento/consumo_listar.html'
+    template_name = 'gerenciamento/listar/consumo_listar.html'
 
 class ConsumoCreateView(generic.CreateView):
 	model = Consumo
