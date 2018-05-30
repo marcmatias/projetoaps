@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+
 <div class="container-fluid">
 	<!-- Breadcrumbs-->
 	<ol class="breadcrumb">
@@ -9,6 +11,24 @@
 		</li>
 		<li class="breadcrumb-item active">Principal</li>
 	</ol>
+
+	<div class="card mb-3">
+		<div class="card-body">
+			<form method="POST" action="{% url 'sistema:home' %}">
+				{% csrf_token %}
+				<div class="form-group">
+			    <label for="exampleSelect1">Selecione a sala</label>
+			    <select class="form-control" name="select_sala" id="select_sala">
+						<option value="null" selected disabled> Selecione Sala </option>
+						{% for sala in salas %}
+							<option value="{{ sala.slug }}">{{ sala.nome }}</option>
+						{% endfor %}
+			    </select>
+			  </div>
+				<button type="submit" name="button" class="btn btn-primary" onclick="return FunctionSelect()" >Enviar</button>
+			</form>
+		</div>
+	</div>
 
 	<!-- Area Chart Example-->
 	<div class="card mb-3">
@@ -58,9 +78,7 @@
 		</div>
 	</div>
 </div>
-{% for consumos in consumo %}
-	{{ consumos.kwh }},
-{% endfor %}
+
 {% endblock %}
 
 
@@ -68,6 +86,13 @@
 {% block javascript %}
 
 <script type="text/javascript">
+	function FunctionSelect() {
+		if(document.getElementById("select_sala").value == "null"){
+			alert("Selecione uma sala");
+			return false;
+		}
+		return true;
+	}
 	// -- Area Chart Example
 	var ctx = document.getElementById("myAreaChart");
 	var myLineChart = new Chart(ctx, {

@@ -16,11 +16,15 @@ class IndexListView(generic.TemplateView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['consumo'] = Consumo.objects.all()
-		context['title'] = "Cadastrar Estabelecimento"
-		context['breadcrumb_title'] = "Estabelecimento"
-		context['breadcrumb_link'] = "estabelecimento_listar"
+		context['salas'] = Sala.objects.all()
 		return super().get_context_data(**context)
-
+	def post(self, request):
+		context = {}
+		context['salas'] = Sala.objects.all()
+		context['select_sala'] = request.POST['select_sala']
+		context['sala'] = Sala.objects.get(slug=context['select_sala'])
+		context['consumo'] = Consumo.objects.filter(sala=context['sala'])
+		return render(request, self.template_name, context)
 # CRUD Estabelecimento
 
 class EstabelecimentoListView(generic.ListView):
@@ -160,6 +164,7 @@ class ConsumoCreateView(generic.CreateView):
 		context['breadcrumb_title'] = "Consumo"
 		context['breadcrumb_link'] = "consumo_listar"
 		return super().get_context_data(**context)
+	# Modificar field do formulário
 	# def get_form(self, form_class=None):
 	# 	form = super(ConsumoCreateView, self).get_form(form_class)
 	# 	form.fields['data'].widget.attrs.update({'class': 'datepicker'})

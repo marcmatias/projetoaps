@@ -10,16 +10,19 @@ urlpatterns = [
 	# path('admin/', admin.site.urls),
 	# path('', login_required(views.IndexListView.as_view(), login_url=reverse_lazy('sistema:login')), name='index'),
 	path('', login_required(views.IndexListView.as_view()), name="home"),
-	# Predio urls
-	path('predio_listar/', login_required(views.PredioListView.as_view()), name="predio_listar"),
-	path('predio_cadastrar/', login_required(views.PredioCreateView.as_view()), name="predio_cadastrar"),
-	path('predio_editar_form/<slug:slug>', login_required(views.PredioUpdateView.as_view()), name="predio_editar"),
-	path('predio_deletar_form/<slug:slug>', login_required(views.PredioDeleteView.as_view()), name="predio_deletar"),
+
+	# path('charts/', login_required(views.ChartView.as_view()), name="graficos"),
+
 	# Estabelecimento urls
 	path('estabelecimento_listar/', login_required(views.EstabelecimentoListView.as_view()), name="estabelecimento_listar"),
 	path('estabelecimento_cadastrar/', login_required(views.EstabelecimentoCreateView.as_view()), name="estabelecimento_cadastrar"),
 	path('estabelecimento_editar_form/<slug:slug>', login_required(views.EstabelecimentoUpdateView.as_view()), name="estabelecimento_editar"),
 	path('estabelecimento_deletar_form/<slug:slug>', login_required(views.EstabelecimentoDeleteView.as_view()), name="estabelecimento_deletar"),
+	# Predio urls
+	path('predio_listar/', login_required(views.PredioListView.as_view()), name="predio_listar"),
+	path('predio_cadastrar/', login_required(views.PredioCreateView.as_view()), name="predio_cadastrar"),
+	path('predio_editar_form/<slug:slug>', login_required(views.PredioUpdateView.as_view()), name="predio_editar"),
+	path('predio_deletar_form/<slug:slug>', login_required(views.PredioDeleteView.as_view()), name="predio_deletar"),
 	# Estabelecimento urls
 	path('sala_listar/', login_required(views.SalaListView.as_view()), name="sala_listar"),
 	path('sala_cadastrar/', login_required(views.SalaCreateView.as_view()), name="sala_cadastrar"),
