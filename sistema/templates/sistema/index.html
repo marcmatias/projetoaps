@@ -17,11 +17,18 @@
 			<form method="POST" action="{% url 'sistema:home' %}">
 				{% csrf_token %}
 				<div class="form-group">
-			    <label for="exampleSelect1">Selecione a sala</label>
+			    <label for="exampleSelect1">Selecione uma sala:</label>
 			    <select class="form-control" name="select_sala" id="select_sala">
-						<option value="null" selected disabled> Selecione Sala </option>
-						{% for sala in salas %}
-							<option value="{{ sala.slug }}">{{ sala.nome }}</option>
+						{% if not select_sala %}
+								<option value="null" selected disabled> -- Salas --</option>
+						{% else %}
+								<option value="null" disabled> -- Salas --</option>
+								<option value="{{ sala.slug }}" selected>{{ sala.nome }}</option>
+						{% endif %}
+						{% for object in salas %}
+							{% if object != sala %}
+								<option value="{{ object.slug }}">{{ object.nome }}</option>
+							{% endif %}
 						{% endfor %}
 			    </select>
 			  </div>
