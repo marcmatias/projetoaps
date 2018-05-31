@@ -15,7 +15,6 @@ class IndexListView(generic.TemplateView):
 	template_name = 'sistema/index.html'
 	def get_context_data(self, **kwargs):
 		context = {}
-		context['consumo'] = Consumo.objects.all()
 		context['salas'] = Sala.objects.all()
 		return super().get_context_data(**context)
 	def post(self, request):
@@ -25,6 +24,7 @@ class IndexListView(generic.TemplateView):
 		context['sala'] = Sala.objects.get(slug=context['select_sala'])
 		context['consumo'] = Consumo.objects.filter(sala=context['sala'])
 		return render(request, self.template_name, context)
+
 # CRUD Estabelecimento
 
 class EstabelecimentoListView(generic.ListView):

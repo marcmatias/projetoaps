@@ -198,14 +198,28 @@
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+      <script src="{% static 'js/bootstrap-datepicker.pt-BR.js' %}"></script>
 
 
       <script type="text/javascript">
+        //  -- Alerta de select == null em cadastrar sala e charts sala
+        function FunctionSelect() {
+          if(document.getElementById("select_sala").value == "null"){
+            alert("Selecione uma sala");
+            return false;
+          }
+          return true;
+        }
         // -- Datepicker pt-br
         $( "#id_data" ).datepicker({
            todayHighlight: true,
-           format: 'dd/mm/yyyy'
+           format: 'dd/mm/yyyy',
+           language: 'pt-BR',
+         	 weekStart: 0,
+         	 endDate:'0d',
+           autoclose: true
          });
+
       </script>
       {% block javascript %}
       {% endblock %}

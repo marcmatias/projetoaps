@@ -23,7 +23,7 @@
         <div class="card-body">
           <form method="post">
             {% include 'includes/form.html' with form=form %}
-            <input type="submit" class="btn btn-primary" value="Cadastrar" />
+            <input type="submit" class="btn btn-primary" onclick="return FunctionSelect()" value="Cadastrar" />
             <a href="../{{ breadcrumb_link }}" class="btn btn-light">Voltar</a>
           </form>
         </div>
