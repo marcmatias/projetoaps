@@ -22,49 +22,49 @@ class IndexListView(generic.TemplateView):
 		context['salas'] = Sala.objects.all()
 		context['select_sala'] = request.POST['select_sala']
 		context['sala'] = Sala.objects.get(slug=context['select_sala'])
-		context['consumo'] = Consumo.objects.filter(sala=context['sala'])
+		context['consumo'] = Consumo.objects.filter(sala=context['sala']).order_by('data')
 		return render(request, self.template_name, context)
 
 # CRUD Estabelecimento
 
-class EstabelecimentoListView(generic.ListView):
-    model = Estabelecimento
-    template_name = 'gerenciamento/listar/estabelecimento_listar.html'
-
-class EstabelecimentoCreateView(generic.CreateView):
-	model = Estabelecimento
-	template_name = 'gerenciamento/cadastrar.html'
-	fields = ['nome']
-	success_url = reverse_lazy('sistema:estabelecimento_listar')
-	def get_context_data(self, **kwargs):
-		context = {}
-		context['title'] = "Cadastrar Estabelecimento"
-		context['breadcrumb_title'] = "Estabelecimento"
-		context['breadcrumb_link'] = "estabelecimento_listar"
-		return super().get_context_data(**context)
-
-class EstabelecimentoUpdateView(generic.UpdateView):
-	model = Estabelecimento
-	template_name = 'gerenciamento/editar.html'
-	fields = ['nome']
-	success_url = reverse_lazy('sistema:estabelecimento_listar')
-	def get_context_data(self, **kwargs):
-		context = {}
-		context['title'] = "Editar Estabelecimento"
-		context['breadcrumb_title'] = "Estabelecimento"
-		context['breadcrumb_link'] = "estabelecimento_listar"
-		return super().get_context_data(**context)
-
-class EstabelecimentoDeleteView(generic.DeleteView):
-	model = Estabelecimento
-	template_name = 'gerenciamento/deletar.html'
-	success_url = reverse_lazy('sistema:estabelecimento_listar')
-	def get_context_data(self, **kwargs):
-		context = {}
-		context['title'] = "Deletar Estabelecimento"
-		context['breadcrumb_title'] = "Estabelecimento"
-		context['breadcrumb_link'] = "estabelecimento_listar"
-		return super().get_context_data(**context)
+# class EstabelecimentoListView(generic.ListView):
+#     model = Estabelecimento
+#     template_name = 'gerenciamento/listar/estabelecimento_listar.html'
+#
+# class EstabelecimentoCreateView(generic.CreateView):
+# 	model = Estabelecimento
+# 	template_name = 'gerenciamento/cadastrar.html'
+# 	fields = ['nome']
+# 	success_url = reverse_lazy('sistema:estabelecimento_listar')
+# 	def get_context_data(self, **kwargs):
+# 		context = {}
+# 		context['title'] = "Cadastrar Estabelecimento"
+# 		context['breadcrumb_title'] = "Estabelecimento"
+# 		context['breadcrumb_link'] = "estabelecimento_listar"
+# 		return super().get_context_data(**context)
+#
+# class EstabelecimentoUpdateView(generic.UpdateView):
+# 	model = Estabelecimento
+# 	template_name = 'gerenciamento/editar.html'
+# 	fields = ['nome']
+# 	success_url = reverse_lazy('sistema:estabelecimento_listar')
+# 	def get_context_data(self, **kwargs):
+# 		context = {}
+# 		context['title'] = "Editar Estabelecimento"
+# 		context['breadcrumb_title'] = "Estabelecimento"
+# 		context['breadcrumb_link'] = "estabelecimento_listar"
+# 		return super().get_context_data(**context)
+#
+# class EstabelecimentoDeleteView(generic.DeleteView):
+# 	model = Estabelecimento
+# 	template_name = 'gerenciamento/deletar.html'
+# 	success_url = reverse_lazy('sistema:estabelecimento_listar')
+# 	def get_context_data(self, **kwargs):
+# 		context = {}
+# 		context['title'] = "Deletar Estabelecimento"
+# 		context['breadcrumb_title'] = "Estabelecimento"
+# 		context['breadcrumb_link'] = "estabelecimento_listar"
+# 		return super().get_context_data(**context)
 
 
 # Fim do CRUD Estabelecimento
@@ -78,7 +78,7 @@ class PredioListView(generic.ListView):
 class PredioCreateView(generic.CreateView):
 	model = Predio
 	template_name = 'gerenciamento/cadastrar.html'
-	fields = ['estabelecimento', 'nome']
+	fields = ['nome']
 	success_url = reverse_lazy('sistema:predio_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
@@ -90,7 +90,7 @@ class PredioCreateView(generic.CreateView):
 class PredioUpdateView(generic.UpdateView):
 	model = Predio
 	template_name = 'gerenciamento/editar.html'
-	fields = ['estabelecimento', 'nome']
+	fields = ['nome']
 	success_url = reverse_lazy('sistema:predio_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
@@ -117,10 +117,12 @@ class SalaListView(generic.ListView):
 class SalaCreateView(generic.CreateView):
 	model = Sala
 	template_name = 'gerenciamento/cadastrar.html'
-	fields = ['predio', 'nome']
+	# fields = ['predio', 'nome']
+	form_class = SalaForm
 	success_url = reverse_lazy('sistema:sala_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
+		context['predios'] = Predio.objects.all()
 		context['title'] = "Cadastrar Sala"
 		context['breadcrumb_title'] = "Sala"
 		context['breadcrumb_link'] = "sala_listar"
@@ -133,6 +135,7 @@ class SalaUpdateView(generic.UpdateView):
 	success_url = reverse_lazy('sistema:sala_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
+		context['predios'] = Predio.objects.all()
 		context['title'] = "Editar Sala"
 		return super().get_context_data(**context)
 
@@ -156,7 +159,7 @@ class ConsumoListView(generic.ListView):
 class ConsumoCreateView(generic.CreateView):
 	model = Consumo
 	template_name = 'gerenciamento/cadastrar.html'
-	fields = ['sala', 'kwh', 'data']
+	form_class = ConsumoForm
 	success_url = reverse_lazy('sistema:consumo_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
@@ -173,7 +176,7 @@ class ConsumoCreateView(generic.CreateView):
 class ConsumoUpdateView(generic.UpdateView):
 	model = Consumo
 	template_name = 'gerenciamento/editar.html'
-	fields = ['sala', 'kwh', 'data']
+	form_class = ConsumoForm
 	success_url = reverse_lazy('sistema:consumo_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
@@ -191,3 +194,9 @@ class ConsumoDeleteView(generic.DeleteView):
 		return super().get_context_data(**context)
 
 # Fim do CRUD consumo
+
+# Popular select sala
+def load_salas(request):
+    predio_id = request.GET.get('predio')
+    salas = Sala.objects.filter(predio__pk=predio_id)
+    return render(request, 'hr/salas_dropdown_list_options.html', {'salas': salas})

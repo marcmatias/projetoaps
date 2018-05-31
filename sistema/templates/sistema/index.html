@@ -17,22 +17,22 @@
 			<form method="POST" action="{% url 'sistema:home' %}">
 				{% csrf_token %}
 				<div class="form-group">
-			    <label for="exampleSelect1">Sala:</label>
-			    <select class="form-control" name="select_sala" id="select_sala">
+			    <label for="exampleSelect1">Geração de gráfico:</label>
+			    <select class="form-control" name="select_sala" id="select_sala" onchange='if(this.value != null) { this.form.submit(); }'>
 						{% if not select_sala %}
 								<option value="null" selected disabled> -- Selecione uma sala --</option>
 						{% else %}
 								<option value="null" disabled> -- Selecione uma sala --</option>
-								<option value="{{ sala.slug }}" selected>{{ sala.nome }}</option>
+								<option value="{{ sala.slug }}" selected>{{ sala.predio }} - {{ sala.nome }}</option>
 						{% endif %}
 						{% for object in salas %}
 							{% if object != sala %}
-								<option value="{{ object.slug }}">{{ object.nome }}</option>
+								<option value="{{ object.slug }}">{{ object.predio }} - {{ object.nome }}</option>
 							{% endif %}
 						{% endfor %}
 			    </select>
 			  </div>
-				<button type="submit" name="button" class="btn btn-primary" onclick="return FunctionSelect()" >Enviar</button>
+				<!-- <button type="submit" name="button" class="btn btn-primary" onclick="return FunctionSelect()" >Gerar</button> -->
 			</form>
 		</div>
 	</div>
@@ -40,7 +40,7 @@
 	<!-- Area Chart Example-->
 	<div class="card mb-3">
 		<div class="card-header">
-			<i class="fa fa-area-chart"></i> Area Chart Example</div>
+			<i class="fa fa-area-chart"></i> Gráfico de consumo elétrico diário</div>
 		<div class="card-body">
 			<canvas id="myAreaChart" width="100%" height="30"></canvas>
 		</div>
@@ -49,7 +49,8 @@
 	<div class="row">
 		<div class="col-lg-9">
 			<!-- Example Bar Chart Card-->
-			<div class="card mb-3">
+
+			<!-- <div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-bar-chart"></i> Bar Chart Example</div>
 				<div class="card-body">
@@ -71,9 +72,11 @@
 				</div>
 				<div class="card-footer small text-muted">&nbsp;</div>
 			</div>
-		</div>
+		</div> -->
+
 		<!-- Example Pie Chart Card-->
-		<div class="col-lg-3">
+
+		<!-- <div class="col-lg-3">
 			<div class="card ">
 				<div class="card-header">
 					<i class="fa fa-pie-chart"></i> Pie Chart Example</div>
@@ -82,7 +85,7 @@
 					</div>
 					<div class="card-footer small text-muted"></div>
 				</div>
-		</div>
+		</div> -->
 	</div>
 </div>
 

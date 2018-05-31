@@ -14,10 +14,11 @@ urlpatterns = [
 	# path('charts/', login_required(views.ChartView.as_view()), name="graficos"),
 
 	# Estabelecimento urls
-	path('estabelecimento_listar/', login_required(views.EstabelecimentoListView.as_view()), name="estabelecimento_listar"),
-	path('estabelecimento_cadastrar/', login_required(views.EstabelecimentoCreateView.as_view()), name="estabelecimento_cadastrar"),
-	path('estabelecimento_editar_form/<slug:slug>', login_required(views.EstabelecimentoUpdateView.as_view()), name="estabelecimento_editar"),
-	path('estabelecimento_deletar_form/<slug:slug>', login_required(views.EstabelecimentoDeleteView.as_view()), name="estabelecimento_deletar"),
+	# path('estabelecimento_listar/', login_required(views.EstabelecimentoListView.as_view()), name="estabelecimento_listar"),
+	# path('estabelecimento_cadastrar/', login_required(views.EstabelecimentoCreateView.as_view()), name="estabelecimento_cadastrar"),
+	# path('estabelecimento_editar_form/<slug:slug>', login_required(views.EstabelecimentoUpdateView.as_view()), name="estabelecimento_editar"),
+	# path('estabelecimento_deletar_form/<slug:slug>', login_required(views.EstabelecimentoDeleteView.as_view()), name="estabelecimento_deletar"),
+
 	# Predio urls
 	path('predio_listar/', login_required(views.PredioListView.as_view()), name="predio_listar"),
 	path('predio_cadastrar/', login_required(views.PredioCreateView.as_view()), name="predio_cadastrar"),
@@ -33,6 +34,8 @@ urlpatterns = [
 	path('consumo_cadastrar/', login_required(views.ConsumoCreateView.as_view()), name="consumo_cadastrar"),
 	path('consumo_editar_form/<slug:slug>', login_required(views.ConsumoUpdateView.as_view()), name="consumo_editar"),
 	path('consumo_deletar_form/<slug:slug>', login_required(views.ConsumoDeleteView.as_view()), name="consumo_deletar"),
+	#Popular Select Predios
+	path('ajax/load-salas/', views.load_salas, name='ajax_load_salas'),
 	# Login e Logout
 	path('login/', auth_views.login, name='login'),
 	path('logout/', auth_views.logout, {'next_page': reverse_lazy('sistema:login')}, name='logout'),
