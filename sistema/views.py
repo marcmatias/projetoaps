@@ -13,6 +13,10 @@ from django import forms
 
 class IndexListView(generic.TemplateView):
 	template_name = 'sistema/index.html'
+
+
+class ChartListView(generic.TemplateView):
+	template_name = 'sistema/chart.html'
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['salas'] = Sala.objects.all()

@@ -1,209 +1,346 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+  <head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<div class="container-fluid">
-	<!-- Breadcrumbs-->
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item">
-			<a href="#">Dashboard</a>
-		</li>
-		<li class="breadcrumb-item active">Principal</li>
-	</ol>
+    <title>ECOmanager</title>
 
-	<div class="card mb-3">
-		<div class="card-body">
-			<form method="POST" action="{% url 'sistema:home' %}">
-				{% csrf_token %}
-				<div class="form-group">
-			    <label for="exampleSelect1">Geração de gráfico:</label>
-			    <select class="form-control" name="select_sala" id="select_sala" onchange='if(this.value != null) { this.form.submit(); }'>
-						{% if not select_sala %}
-								<option value="null" selected disabled> -- Selecione uma sala --</option>
-						{% else %}
-								<option value="null" disabled> -- Selecione uma sala --</option>
-								<option value="{{ sala.slug }}" selected>{{ sala.predio }} - {{ sala.nome }}</option>
-						{% endif %}
-						{% for object in salas %}
-							{% if object != sala %}
-								<option value="{{ object.slug }}">{{ object.predio }} - {{ object.nome }}</option>
-							{% endif %}
-						{% endfor %}
-			    </select>
-			  </div>
-				<!-- <button type="submit" name="button" class="btn btn-primary" onclick="return FunctionSelect()" >Gerar</button> -->
-			</form>
-		</div>
-	</div>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-	<!-- Area Chart Example-->
-	<div class="card mb-3">
-		<div class="card-header">
-			<i class="fa fa-area-chart"></i> Gráfico de consumo elétrico diário</div>
-		<div class="card-body">
-			<canvas id="myAreaChart" width="100%" height="30"></canvas>
-		</div>
-		<div class="card-footer small text-muted">&nbsp;</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-9">
-			<!-- Example Bar Chart Card-->
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 
-			<!-- <div class="card mb-3">
-				<div class="card-header">
-					<i class="fa fa-bar-chart"></i> Bar Chart Example</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-sm-8 my-auto">
-							<canvas id="myBarChart" width="100" height="50"></canvas>
-						</div>
-						<div class="col-sm-4 text-center my-auto">
-							<div class="h4 mb-0 text-primary">R$34,693</div>
-							<div class="small text-muted">YTD Revenue</div>
-							<hr>
-							<div class="h4 mb-0 text-warning">R$18,474</div>
-							<div class="small text-muted">YTD Expenses</div>
-							<hr>
-							<div class="h4 mb-0 text-success">R$16,219</div>
-							<div class="small text-muted">YTD Margin</div>
-						</div>
-					</div>
-				</div>
-				<div class="card-footer small text-muted">&nbsp;</div>
-			</div>
-		</div> -->
+    <!-- Plugin CSS -->
+    <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
 
-		<!-- Example Pie Chart Card-->
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/creative.css' %}" rel="stylesheet">
 
-		<!-- <div class="col-lg-3">
-			<div class="card ">
-				<div class="card-header">
-					<i class="fa fa-pie-chart"></i> Pie Chart Example</div>
-					<div class="card-body">
-						<canvas id="myPieChart" width="100%" height="100">&nbsp;</canvas>
-					</div>
-					<div class="card-footer small text-muted"></div>
-				</div>
-		</div> -->
-	</div>
-</div>
+  </head>
 
-{% endblock %}
+  <body id="page-top">
 
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">ECOManager</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">Sobre</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio">Telas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#equipe">Equipe</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#doc">Documentação</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'sistema:login' %}">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-{% load l10n %}
-{% block javascript %}
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>ECOManager</strong>
+            </h1>
+            <hr class="light">
+          </div>
+          <div class="col-lg-8 mx-auto">
+            <p class="text-faded mb-5">Um moderno sistema de gerenciamento e acompanhamento de consumo elétrico</p>
+            <a class="btn btn-info btn-xl js-scroll-trigger sr-button" href="#about">Conheça</a>
+          </div>
+        </div>
+      </div>
+    </header>
 
-<script type="text/javascript">
-	function FunctionSelect() {
-		if(document.getElementById("select_sala").value == "null"){
-			alert("Selecione uma sala");
-			return false;
-		}
-		return true;
-	}
-	// -- Area Chart Example
-	var ctx = document.getElementById("myAreaChart");
-	var myLineChart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: [
-				{% for consumos in consumo %}
-					'{{ consumos.data }}',
-				{% endfor %}
-			],
-			datasets: [{
-				label: "kwh",
-				lineTension: 0.3,
-				backgroundColor: "rgba(2,117,216,0.2)",
-				borderColor: "rgba(2,117,216,1)",
-				pointRadius: 5,
-				pointBackgroundColor: "rgba(2,117,216,1)",
-				pointBorderColor: "rgba(255,255,255,0.8)",
-				pointHoverRadius: 5,
-				pointHoverBackgroundColor: "rgba(2,117,216,1)",
-				pointHitRadius: 20,
-				pointBorderWidth: 2,
-				data: [
-					{% localize off %}
-						{% for consumos in consumo %}
-							'{{ consumos.kwh }}',
-						{% endfor %}
-					{% endlocalize %}
-				],
-			}],
-		},
-		options: {
-			scales: {
-				xAxes: [{
-					time: {
-						unit: 'date'
-					},
-					gridLines: {
-						display: false
-					},
-					ticks: {
-						maxTicksLimit: 7
-					}
-				}],
-				yAxes: [{
-					ticks: {
-						min: 0,
-						max: 40000,
-						maxTicksLimit: 5
-					},
-					gridLines: {
-						color: "rgba(0, 0, 0, .125)",
-					}
-				}],
-			},
-			legend: {
-				display: false
-			}
-		}
-	});
-	// -- Bar Chart Example
-	var ctx = document.getElementById("myBarChart");
-	var myLineChart = new Chart(ctx, {
-	  type: 'bar',
-	  data: {
-	    labels: ["January", "February", "March", "April", "May", "June"],
-	    datasets: [{
-	      label: "Revenue",
-	      backgroundColor: "rgba(2,117,216,1)",
-	      borderColor: "rgba(2,117,216,1)",
-	      data: [4215, 5312, 6251, 7841, 9821, 14984],
-	    }],
-	  },
-	  options: {
-	    scales: {
-	      xAxes: [{
-	        time: {
-	          unit: 'month'
-	        },
-	        gridLines: {
-	          display: false
-	        },
-	        ticks: {
-	          maxTicksLimit: 6
-	        }
-	      }],
-	      yAxes: [{
-	        ticks: {
-	          min: 0,
-	          max: 15000,
-	          maxTicksLimit: 5
-	        },
-	        gridLines: {
-	          display: true
-	        }
-	      }],
-	    },
-	    legend: {
-	      display: false
-	    }
-	  }
-	});
-</script>
-{% endblock %}
+    <section class="bg-primary" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading text-white">Nós temos o que você precisa!</h2>
+            <hr class="light my-4">
+            <p class="text-faded mb-4 text-justify">Nossa tecnologia funciona com microcontroladores arduíno com sensores
+               instalados junto a placa o que nos permite regular, customizar e monitorar o consumo de energia elétrica de
+                todos os aparelhos ligados a rede elétrica. O gerenciamento será feito através de aplicativo para tablet e
+                 smartphone disponível através das maiores lojas de aplicativos da atualidade (iOS, Android e versão web para PC).
+                  O acesso será feito através da criação de um login e senha aprovado por nossa equipe de gerenciamento, para
+                   sua maior segurança.</p>
+            <a class="btn btn-light btn-xl js-scroll-trigger sr-button" href="#services">Começar!</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Solicite nossos serviços para sua empresa</h2>
+            <hr class="my-4">
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <i class="fa fa-4x fa-plug text-primary mb-3 sr-icons"></i>
+              <h3 class="mb-3">Consumo Eficiente</h3>
+              <p class="text-muted mb-0">Monitore diariamente (histórico semanal, mensal e anual) o consumo de cada cômodo do seu estabelecimenoto.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
+              <h3 class="mb-3">Pronto para usar</h3>
+              <p class="text-muted mb-0">Após a instalação  dos sensores já estará pronto para leitura de dados.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
+              <h3 class="mb-3">Relatórios</h3>
+              <p class="text-muted mb-0">Relatórios atualizados diariamente com gastos diários e projeção de gastos futuros.</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 text-center">
+            <div class="service-box mt-5 mx-auto">
+              <i class="fa fa-4x fa-money text-primary mb-3 sr-icons"></i>
+              <h3 class="mb-3">Economize</h3>
+              <p class="text-muted mb-0">Maior conhecimento obtido através da base de dados gerado por sua empresa, maior possibilidades de economia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="p-0" id="portfolio">
+      <div class="container-fluid p-0">
+        <div class="row no-gutters popup-gallery">
+          <div class="col-lg-4 col-sm-4">
+            <a class="portfolio-box" href="{% static 'img/portfolio/fullsize/1.jpg' %}">
+              <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/1.jpg' %}" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Cadastre
+                  </div>
+                  <div class="project-name">
+                    Salas e prédios
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-4">
+            <a class="portfolio-box" href="{% static 'img/portfolio/fullsize/2.jpg' %}">
+              <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/2.jpg' %}" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Cadastro
+                  </div>
+                  <div class="project-name">
+                    Consumo é feito manual ou automáticamente via arduíno
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-4">
+            <a class="portfolio-box" href="{% static 'img/portfolio/fullsize/3.jpg' %}">
+              <img class="img-fluid" src="{% static 'img/portfolio/thumbnails/3.jpg' %}" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Gráficos
+                  </div>
+                  <div class="project-name">
+                    Relatórios diários para acompanhamento de consumo
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!-- <div class="col-lg-4 col-sm-6">
+            <a class="portfolio-box" href="img/portfolio/fullsize/4.jpg">
+              <img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Category
+                  </div>
+                  <div class="project-name">
+                    Project Name
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <a class="portfolio-box" href="img/portfolio/fullsize/5.jpg">
+              <img class="img-fluid" src="img/portfolio/thumbnails/5.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Category
+                  </div>
+                  <div class="project-name">
+                    Project Name
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <a class="portfolio-box" href="img/portfolio/fullsize/6.jpg">
+              <img class="img-fluid" src="img/portfolio/thumbnails/6.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Category
+                  </div>
+                  <div class="project-name">
+                    Project Name
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <section id="equipe">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading">Nossa Equipe</h2>
+            <hr class="my-4">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 ml-auto text-center">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <!-- <th>Matrícula</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Alexandre Silva dos Santos</td>
+                  <!-- <td>1710018026</td> -->
+                </tr>
+                <tr>
+                  <td>Anibal de Medeiros Batista Filho</td>
+                  <!-- <td>1710017987</td> -->
+                </tr>
+                <tr>
+                  <td>Marcel Marques</td>
+                  <!-- <td>1710017713</td> -->
+                </tr>
+                <tr>
+                  <td>Rodrigo Oliveira Gomes dos Santos</td>
+                  <!-- <td>1710019576</td> -->
+                </tr>
+                <tr>
+                  <td>Ronaldo Costa Cordeiro</td>
+                  <!-- <td>1710017723</td> -->
+                </tr>
+              </tbody>
+            </table><br>
+          <a class="btn btn-info btn-xl js-scroll-trigger sr-button" href="#doc">Documentação</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-dark" id="doc">
+      <div class="container text-center text-white">
+        <h2 class="mb-4">Conheça melhor o nosso produto!</h2>
+          <div class="row">
+            <div class="col-sm col-md-6 col-lg-3 p-3">
+              <a class="btn btn-light btn-xl sr-button btn-width" href="https://drive.google.com/file/d/1L3i6DkDkMsYOE45CslBalVT6cyHjNuDw/view?usp=sharing">Relatório</a>
+            </div>
+            <div class="col-sm col-md-6 col-lg-3 p-3">
+              <a class="btn btn-light btn-xl sr-button btn-width" href="https://drive.google.com/file/d/0B4sZHOhF5e6mb25jcTVTRS1CbHM/view?usp=sharing">Análise</a>
+            </div>
+            <div class="col-sm col-md-6 col-lg-3 p-3">
+              <a class="btn btn-light btn-xl sr-button btn-width" href="https://docs.google.com/uc?export=download&id=0B1KPxQ6Uj8AGOS1wRnpsb25jQlk">Baixar APK</a>
+            </div>
+            <div class="col-sm col-md-6 col-lg-3 p-3">
+              <a class="btn btn-light btn-xl sr-button btn-width" href="http://www.youtube.com/watch?v=WIcqigws3KI">Vídeo APK</a>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading">Vamos conversar!</h2>
+            <hr class="my-4">
+            <p class="mb-5">Pronto para contratar nossos serviços? Isto é ótimo! Faça-nos uma ligação ou envie-nos um e-mail e agende uma visita de um de nossos vendedores!</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 ml-auto text-center">
+            <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+            <p>(99) 9999-9999</p>
+          </div>
+          <div class="col-lg-4 mr-auto text-center">
+            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+            <p>
+              <a href="mailto:your-email@your-domain.com">example@email.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'vendor/scrollreveal/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'js/creative.js' %}"></script>
+
+  </body>
+
+</html>
