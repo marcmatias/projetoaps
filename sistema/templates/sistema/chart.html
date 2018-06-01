@@ -110,7 +110,7 @@
 		data: {
 			labels: [
 				{% for consumos in consumo %}
-					'{{ consumos.data }}',
+					'{{ consumos.data|date:" d/m/y" }}',
 				{% endfor %}
 			],
 			datasets: [{

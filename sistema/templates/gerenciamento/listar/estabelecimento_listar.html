@@ -20,11 +20,11 @@
         <i class="fa fa-table"></i> Tabela Estabelecimentos</div>
       <div class="card-body">
         <div style="margin-left:15px">
-          <a href="{% url 'sistema:estabelecimento_cadastrar' %}" class="btn btn-primary">Cadastrar Novo</a>
+          <a href="{% url 'sistema:estabelecimento_cadastrar' %}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a>
         </div><br>
         {% if estabelecimento_list %}
         <div class="table-responsive">
-          <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+          <table class="table table-bordered table-striped table-bordered nowrap text-center" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>Nome</th>
@@ -36,8 +36,8 @@
                 <tr>
                   <td>{{ estabelecimento.nome }}</td>
                   <td>
-                    <a href="{% url 'sistema:estabelecimento_editar' estabelecimento.slug %}" class="btn btn-primary">Edit</a>
-                    <a href="{% url 'sistema:estabelecimento_deletar' estabelecimento.slug %}" class="btn btn-danger">Del</a>
+                    <a href="{% url 'sistema:estabelecimento_editar' estabelecimento.slug %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <a href="{% url 'sistema:estabelecimento_deletar' estabelecimento.slug %}" class="btn btn-danger ml-1"><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>
               {% empty %}
