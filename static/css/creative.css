@@ -194,6 +194,20 @@ header.masthead p {
   font-weight: 300;
 }
 
+@media (max-width: 768px) {
+  header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 56px);
+    background-image: url("../img/header.jpg");
+    background-position:63% 50%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}
+
+
 @media (min-width: 768px) {
   header.masthead p {
     font-size: 1.15rem;
