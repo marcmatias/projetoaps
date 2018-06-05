@@ -5,7 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import *
 from django import forms
-
+import datetime
+from datetime import date, datetime, timedelta
 
 
 
@@ -26,7 +27,25 @@ class ChartListView(generic.TemplateView):
 		context['salas'] = Sala.objects.all()
 		context['select_sala'] = request.POST['select_sala']
 		context['sala'] = Sala.objects.get(slug=context['select_sala'])
+		# Gráfico de Consumo diário
 		context['consumo'] = Consumo.objects.filter(sala=context['sala']).order_by('data')
+		# Gráfico de histórico de consumo mensal
+		one_month_before = (datetime.utcnow().replace(day=1) - timedelta(days=1)).replace(day=1)
+		two_month_before = (one_month_before - timedelta(days=1)).replace(day=1)
+		three_month_before = (two_month_before - timedelta(days=1)).replace(day=1)
+		four_month_before = (three_month_before - timedelta(days=1)).replace(day=1)
+		five_month_before = (four_month_before - timedelta(days=1)).replace(day=1)
+		six_month_before = (five_month_before - timedelta(days=1)).replace(day=1)
+		context['consumo_one_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=one_month_before.strftime("%m"))
+		context['consumo_two_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=two_month_before.strftime("%m"))
+		context['consumo_three_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=three_month_before.strftime("%m"))
+		context['consumo_four_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=four_month_before.strftime("%m"))
+		context['consumo_five_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=five_month_before.strftime("%m"))
+		context['consumo_six_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=six_month_before.strftime("%m"))
+		consumo_month = 0
+		for consumo in context['consumo_one_month_before']:
+			consumo_month += consumo.kwh 
+		# print(context['consumo_one_month_before'])
 		return render(request, self.template_name, context)
 
 # CRUD Estabelecimento
