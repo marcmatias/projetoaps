@@ -5,9 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import *
 from django import forms
-import datetime
 from datetime import date, datetime, timedelta
-
+import calendar
 
 
 # Fim de alterar usuário
@@ -30,22 +29,28 @@ class ChartListView(generic.TemplateView):
 		# Gráfico de Consumo diário
 		context['consumo'] = Consumo.objects.filter(sala=context['sala']).order_by('data')
 		# Gráfico de histórico de consumo mensal
-		one_month_before = (datetime.utcnow().replace(day=1) - timedelta(days=1)).replace(day=1)
-		two_month_before = (one_month_before - timedelta(days=1)).replace(day=1)
-		three_month_before = (two_month_before - timedelta(days=1)).replace(day=1)
-		four_month_before = (three_month_before - timedelta(days=1)).replace(day=1)
-		five_month_before = (four_month_before - timedelta(days=1)).replace(day=1)
-		six_month_before = (five_month_before - timedelta(days=1)).replace(day=1)
-		context['consumo_one_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=one_month_before.strftime("%m"))
-		context['consumo_two_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=two_month_before.strftime("%m"))
-		context['consumo_three_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=three_month_before.strftime("%m"))
-		context['consumo_four_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=four_month_before.strftime("%m"))
-		context['consumo_five_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=five_month_before.strftime("%m"))
-		context['consumo_six_month_before'] = Consumo.objects.filter(sala=context['sala'], data__month=six_month_before.strftime("%m"))
-		consumo_month = 0
-		for consumo in context['consumo_one_month_before']:
-			consumo_month += consumo.kwh 
-		# print(context['consumo_one_month_before'])
+		month_before = (datetime.utcnow().replace(day=1) - timedelta(days=1)).replace(day=1)
+		
+		meses = {calendar.month_name[int(month_before.strftime("%m"))] : month_before} 
+		for x in range(2,7):
+			month = (month_before - timedelta(days=1)).replace(day=1)
+			mes_name = calendar.month_name[int(month.strftime("%m"))]
+			meses[mes_name] = month
+			month_before = month			
+		context['meses'] = meses
+
+		sala_consumo = []
+		for x, y in meses.items():
+			consumo_mes_anterior = sum(Consumo.kwh for Consumo in 
+				(Consumo.objects.filter(sala=context['sala'], data__month=y.strftime("%m"))))
+			# if consumo_mes_anterior != 0:
+			sala_consumo.append(consumo_mes_anterior)	
+
+		context['sala_consumo'] = sala_consumo
+		iterar = iter(sala_consumo)
+		context['preco_last_month'] = (next(iterar) / 100) * 2
+		context['preco_2last_month'] = (next(iterar) / 100) * 2
+		context['preco_3last_month'] = (next(iterar) / 100) * 2
 		return render(request, self.template_name, context)
 
 # CRUD Estabelecimento
