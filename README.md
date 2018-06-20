@@ -1,6 +1,26 @@
-# ProjetoAPS
+# Projeto Integrador ADM
 
-Este é um projeto em feito para a cadeira de Análise de Projetos e Sistemas do cuso de Sistemas Para Internet UNIPÊ
+## API REST
+
+####Consulta e criação de Salas no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/salas
+
+####Edição e exclusão de consumos de Salas no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/salasdetalhe/id
+
+id = chave priméria da sala que se quer editar ou deletar, substitua por numeral inteiro
+
+####Consulta e criação de Consumos Elétricos Diários no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/consumos
+
+####Edição e exclusão de consumos de Consumos Eléticos Diários no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/consumosdetalhe/id
+
+id = chave priméria da sala que se quer editar ou deletar, substitua por numeral inteiro
 
 ## Iniciando
 

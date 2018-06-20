@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     #Apps
     'sistema',
     'widget_tweaks',
+    #API
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
