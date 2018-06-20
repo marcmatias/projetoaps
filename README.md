@@ -22,9 +22,18 @@ http://marcmatias.pythonanywhere.com/consumosdetalhe/id
 
 id = chave primária de consumos elétricos diários que se quer editar ou deletar, substitua por numeral inteiro
 
-## Demonstração Online
+## Landing Page
 
 http://marcmatias.pythonanywhere.com
+
+## Sistema
+
+http://marcmatias.pythonanywhere.com/login
+
+```
+Usuário: admin
+Senha: Av123456
+```
 
 <!-- ## Iniciando
 
