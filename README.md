@@ -2,21 +2,21 @@
 
 ## API REST
 
-###Consulta e criação de Salas no sistema via api rest:
+#### Consulta e criação de Salas no sistema via api rest:
 
 http://marcmatias.pythonanywhere.com/salas
 
-###Edição e exclusão de consumos de Salas no sistema via api rest:
+#### Edição e exclusão de consumos de Salas no sistema via api rest:
 
 http://marcmatias.pythonanywhere.com/salasdetalhe/id
 
 id = chave priméria da sala que se quer editar ou deletar, substitua por numeral inteiro
 
-###Consulta e criação de Consumos Elétricos Diários no sistema via api rest:
+#### Consulta e criação de Consumos Elétricos Diários no sistema via api rest:
 
 http://marcmatias.pythonanywhere.com/consumos
 
-###Edição e exclusão de consumos de Consumos Eléticos Diários no sistema via api rest:
+#### Edição e exclusão de consumos de Consumos Eléticos Diários no sistema via api rest:
 
 http://marcmatias.pythonanywhere.com/consumosdetalhe/id
 
