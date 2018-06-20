@@ -22,6 +22,10 @@ http://marcmatias.pythonanywhere.com/consumosdetalhe/id
 
 id = chave primária de consumos elétricos diários que se quer editar ou deletar, substitua por numeral inteiro
 
+## Demonstração Online
+
+http://marcmatias.pythonanywhere.com
+
 <!-- ## Iniciando
 
 As instruções à seguir vão lhe ajudar a montar o projeto na sua máquina e utilizar o sistema com o banco de dados padrão de testes dbsqlite3 do Django.
