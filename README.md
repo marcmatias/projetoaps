@@ -10,7 +10,7 @@ http://marcmatias.pythonanywhere.com/salas
 
 http://marcmatias.pythonanywhere.com/salasdetalhe/id
 
-id = chave priméria da sala que se quer editar ou deletar, substitua por numeral inteiro
+id = chave primária da sala que se quer editar ou deletar, substitua por numeral inteiro
 
 #### Consulta e criação de Consumos Elétricos Diários no sistema via api rest:
 
@@ -20,9 +20,9 @@ http://marcmatias.pythonanywhere.com/consumos
 
 http://marcmatias.pythonanywhere.com/consumosdetalhe/id
 
-id = chave priméria da sala que se quer editar ou deletar, substitua por numeral inteiro
+id = chave primária de consumos elétricos diários que se quer editar ou deletar, substitua por numeral inteiro
 
-## Iniciando
+<!-- ## Iniciando
 
 As instruções à seguir vão lhe ajudar a montar o projeto na sua máquina e utilizar o sistema com o banco de dados padrão de testes dbsqlite3 do Django.
 
@@ -76,7 +76,7 @@ python manage.py createsuperuser
 Execute o sistema no localhost
 ```
 python manage.py runserver
-```
+``` -->
 <!--
 ## Running the tests
 
