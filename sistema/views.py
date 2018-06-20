@@ -8,6 +8,8 @@ from django import forms
 from datetime import date, datetime, timedelta
 import calendar
 
+from rest_framework import generics
+from .serializers import *
 
 # Fim de alterar usuário
 
@@ -43,14 +45,13 @@ class ChartListView(generic.TemplateView):
 		for x, y in meses.items():
 			consumo_mes_anterior = sum(Consumo.kwh for Consumo in 
 				(Consumo.objects.filter(sala=context['sala'], data__month=y.strftime("%m"))))
-			# if consumo_mes_anterior != 0:
 			sala_consumo.append(consumo_mes_anterior)	
 
 		context['sala_consumo'] = sala_consumo
-		iterar = iter(sala_consumo)
-		context['preco_last_month'] = (next(iterar) / 100) * 2
-		context['preco_2last_month'] = (next(iterar) / 100) * 2
-		context['preco_3last_month'] = (next(iterar) / 100) * 2
+		it = iter(sala_consumo)
+		context['preco_last_month'] = (next(it) / 100) * 2
+		context['preco_2last_month'] = (next(it) / 100) * 2
+		context['preco_3last_month'] = (next(it) / 100) * 2
 		return render(request, self.template_name, context)
 
 # CRUD Estabelecimento
@@ -228,3 +229,38 @@ def load_salas(request):
     predio_id = request.GET.get('predio')
     salas = Sala.objects.filter(predio__pk=predio_id)
     return render(request, 'hr/salas_dropdown_list_options.html', {'salas': salas})
+
+
+#Consumo REST API
+
+class ConsumoAPICreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Consumo.objects.all()
+    serializer_class = ConsumoSerializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new bucketlist."""
+        serializer.save()
+
+class ConsumoAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+
+    queryset = Consumo.objects.all()
+    serializer_class = ConsumoSerializer
+
+#Sala REST API
+
+class SalaAPICreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new bucketlist."""
+        serializer.save()
+
+class SalaAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+	"""This class handles the http GET, PUT and DELETE requests."""
+
+	queryset = Sala.objects.all()
+	serializer_class = SalaSerializer
