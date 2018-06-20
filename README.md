@@ -12,6 +12,9 @@ http://marcmatias.pythonanywhere.com/salasdetalhe/id
 
 id = chave primária da sala que se quer editar ou deletar, substitua por numeral inteiro
 
+ex:
+  http://marcmatias.pythonanywhere.com/salasdetalhe/1
+
 #### Consulta e criação de Consumos Elétricos Diários no sistema via api rest:
 
 http://marcmatias.pythonanywhere.com/consumos
@@ -21,6 +24,9 @@ http://marcmatias.pythonanywhere.com/consumos
 http://marcmatias.pythonanywhere.com/consumosdetalhe/id
 
 id = chave primária de consumos elétricos diários que se quer editar ou deletar, substitua por numeral inteiro
+
+ex: 
+  http://marcmatias.pythonanywhere.com/consumosdetalhe/1
 
 ## Landing Page
 
