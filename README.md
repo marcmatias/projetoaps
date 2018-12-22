@@ -135,13 +135,11 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). -->
 
-## Autores
+## Autores Versões Recentes
 
-* **Alexandre Silva dos Santos** - *Gerente de Projeto*
-* **Anibal de Medeiros Batista Filho** - *DBA*
-* **Ronaldo Costa Cordeiro** - *Front-End*
-* **Rodrigo Oliveira Gomes dos Santos** - *Analista*
-* **Marcel Marques** - *Back-End e Front-End* - [Github](https://github.com/marcmatias)
+* **Ronaldo Costa Cordeiro**
+* **Rodrigo Oliveira Gomes dos Santos**
+* **Marcel Marques** [Github](https://github.com/marcmatias)
 
 <!-- See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project. -->
 
