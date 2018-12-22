@@ -32,15 +32,6 @@ ex:
 
 http://marcmatias.pythonanywhere.com
 
-## Sistema
-
-http://marcmatias.pythonanywhere.com/login
-
-```
-Usuário: admin
-Senha: Av123456
-```
-
 <!-- ## Iniciando
 
 As instruções à seguir vão lhe ajudar a montar o projeto na sua máquina e utilizar o sistema com o banco de dados padrão de testes dbsqlite3 do Django.
