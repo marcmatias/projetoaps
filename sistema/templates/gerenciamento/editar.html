@@ -43,6 +43,22 @@
 <script type="text/javascript">
   $('#collapseComponents').removeClass('collapse');
   $('#collapse_gerenciar').removeAttr("data-toggle");
+  $("#id_estabelecimento").change(function () {
+    var url = "{% url 'sistema:ajax_load_predios' %}";  // get the url of the `load_cities` view
+    var estabelecimentoId = $(this).val();  // get the selected country ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      data: {
+        'estabelecimento': estabelecimentoId       // add the country id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_cities` view function
+        $("#id_predio").html(data);  // replace the contents of the city input with the data that came from the server
+        $("#id_sala").html('<option value="">---------</option>');
+      }
+    });
+
+  });
   $("#id_predio").change(function () {
     var url = "{% url 'sistema:ajax_load_salas' %}";  // get the url of the `load_cities` view
     var predioId = $(this).val();  // get the selected country ID from the HTML input

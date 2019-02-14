@@ -1,15 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .models import *
 from .forms import *
 from django import forms
 from datetime import date, datetime, timedelta
 import calendar
-
+# Rest and Serializers
 from rest_framework import generics
 from .serializers import *
+# User Create 
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+# Logar usuario automaticamente apos criacao do mesmo
+# from django.contrib.auth import login, authenticate
 
 # Fim de alterar usuário
 
@@ -56,44 +61,44 @@ class ChartListView(generic.TemplateView):
 
 # CRUD Estabelecimento
 
-# class EstabelecimentoListView(generic.ListView):
-#     model = Estabelecimento
-#     template_name = 'gerenciamento/listar/estabelecimento_listar.html'
-#
-# class EstabelecimentoCreateView(generic.CreateView):
-# 	model = Estabelecimento
-# 	template_name = 'gerenciamento/cadastrar.html'
-# 	fields = ['nome']
-# 	success_url = reverse_lazy('sistema:estabelecimento_listar')
-# 	def get_context_data(self, **kwargs):
-# 		context = {}
-# 		context['title'] = "Cadastrar Estabelecimento"
-# 		context['breadcrumb_title'] = "Estabelecimento"
-# 		context['breadcrumb_link'] = "estabelecimento_listar"
-# 		return super().get_context_data(**context)
-#
-# class EstabelecimentoUpdateView(generic.UpdateView):
-# 	model = Estabelecimento
-# 	template_name = 'gerenciamento/editar.html'
-# 	fields = ['nome']
-# 	success_url = reverse_lazy('sistema:estabelecimento_listar')
-# 	def get_context_data(self, **kwargs):
-# 		context = {}
-# 		context['title'] = "Editar Estabelecimento"
-# 		context['breadcrumb_title'] = "Estabelecimento"
-# 		context['breadcrumb_link'] = "estabelecimento_listar"
-# 		return super().get_context_data(**context)
-#
-# class EstabelecimentoDeleteView(generic.DeleteView):
-# 	model = Estabelecimento
-# 	template_name = 'gerenciamento/deletar.html'
-# 	success_url = reverse_lazy('sistema:estabelecimento_listar')
-# 	def get_context_data(self, **kwargs):
-# 		context = {}
-# 		context['title'] = "Deletar Estabelecimento"
-# 		context['breadcrumb_title'] = "Estabelecimento"
-# 		context['breadcrumb_link'] = "estabelecimento_listar"
-# 		return super().get_context_data(**context)
+class EstabelecimentoListView(generic.ListView):
+    model = Estabelecimento
+    template_name = 'gerenciamento/listar/estabelecimento_listar.html'
+
+class EstabelecimentoCreateView(generic.CreateView):
+	model = Estabelecimento
+	template_name = 'gerenciamento/cadastrar.html'
+	fields = ['nome', 'user']
+	success_url = reverse_lazy('sistema:estabelecimento_listar')
+	def get_context_data(self, **kwargs):
+		context = {}
+		context['title'] = "Cadastrar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
+		return super().get_context_data(**context)
+
+class EstabelecimentoUpdateView(generic.UpdateView):
+	model = Estabelecimento
+	template_name = 'gerenciamento/editar.html'
+	fields = ['nome', 'user']
+	success_url = reverse_lazy('sistema:estabelecimento_listar')
+	def get_context_data(self, **kwargs):
+		context = {}
+		context['title'] = "Editar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
+		return super().get_context_data(**context)
+
+class EstabelecimentoDeleteView(generic.DeleteView):
+	model = Estabelecimento
+	template_name = 'gerenciamento/deletar.html'
+	success_url = reverse_lazy('sistema:estabelecimento_listar')
+	def get_context_data(self, **kwargs):
+		context = {}
+		context['title'] = "Deletar Estabelecimento"
+		context['breadcrumb_title'] = "Estabelecimento"
+		context['breadcrumb_link'] = "estabelecimento_listar"
+		return super().get_context_data(**context)
 
 
 # Fim do CRUD Estabelecimento
@@ -107,7 +112,7 @@ class PredioListView(generic.ListView):
 class PredioCreateView(generic.CreateView):
 	model = Predio
 	template_name = 'gerenciamento/cadastrar.html'
-	fields = ['nome']
+	fields = ['estabelecimento', 'nome']
 	success_url = reverse_lazy('sistema:predio_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
@@ -119,11 +124,12 @@ class PredioCreateView(generic.CreateView):
 class PredioUpdateView(generic.UpdateView):
 	model = Predio
 	template_name = 'gerenciamento/editar.html'
-	fields = ['nome']
+	fields = ['estabelecimento', 'nome']
 	success_url = reverse_lazy('sistema:predio_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar Prédio"
+		context['breadcrumb_link'] = "predio_listar"
 		return super().get_context_data(**context)
 
 class PredioDeleteView(generic.DeleteView):
@@ -160,12 +166,13 @@ class SalaCreateView(generic.CreateView):
 class SalaUpdateView(generic.UpdateView):
 	model = Sala
 	template_name = 'gerenciamento/editar.html'
-	fields = ['predio', 'nome']
+	fields = ['estabelecimento', 'predio', 'nome']
 	success_url = reverse_lazy('sistema:sala_listar')
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['predios'] = Predio.objects.all()
 		context['title'] = "Editar Sala"
+		context['breadcrumb_link'] = "sala_listar"
 		return super().get_context_data(**context)
 
 class SalaDeleteView(generic.DeleteView):
@@ -210,6 +217,7 @@ class ConsumoUpdateView(generic.UpdateView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar Consumo"
+		context['breadcrumb_link'] = "consumo_listar"
 		return super().get_context_data(**context)
 
 
@@ -224,11 +232,66 @@ class ConsumoDeleteView(generic.DeleteView):
 
 # Fim do CRUD consumo
 
+# CRUD SALAS
+
+class UserListView(generic.ListView):
+    model = User
+    template_name = 'gerenciamento/listar/user_listar.html'
+
+class UserCreateView(FormView):
+    form_class = UserCreationForm
+    template_name = 'gerenciamento/cadastrar.html'
+
+    def form_valid(self, form):
+        form.save()
+        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
+        first_name = form.cleaned_data.get('first_name')
+        last_name = form.cleaned_data.get('last_name')
+        raw_password = form.cleaned_data.get('password1')
+        # user = authenticate(username=username, password=raw_password)
+        # login(self.request, user)
+        return redirect('sistema:user_listar')
+    def get_context_data(self, **kwargs):
+        context = {}
+        context['title'] = "Cadastrar User"
+        context['breadcrumb_title'] = "User"
+        context['breadcrumb_link'] = "user_listar"
+        return super().get_context_data(**context)
+
+class UserUpdateView(generic.UpdateView):
+	model = User
+	template_name = 'gerenciamento/editar.html'
+	fields = ['first_name', 'last_name', 'username', 'email']
+	success_url = reverse_lazy('sistema:user_listar')
+	def get_context_data(self, **kwargs):
+		context = {}
+		context['title'] = "Editar User"
+		context['breadcrumb_link'] = "user_listar"
+		return super().get_context_data(**context)
+
+class UserDeleteView(generic.DeleteView):
+	model = User
+	template_name = 'gerenciamento/deletar.html'
+	success_url = reverse_lazy('sistema:user_listar')
+	def get_context_data(self, **kwargs):
+		context = {}
+		context['title'] = "Deletar User"
+		return super().get_context_data(**context)
+
+# Fim do CRUD SALAS
+
 # Popular select sala
 def load_salas(request):
     predio_id = request.GET.get('predio')
     salas = Sala.objects.filter(predio__pk=predio_id)
     return render(request, 'hr/salas_dropdown_list_options.html', {'salas': salas})
+
+# Popular select predio
+def load_predios(request):
+    estabelecimento_id = request.GET.get('estabelecimento')
+    predios = Predio.objects.filter(estabelecimento__pk=estabelecimento_id)
+    return render(request, 'hr/predios_dropdown_list_options.html', {'predios': predios})
 
 
 #Consumo REST API
