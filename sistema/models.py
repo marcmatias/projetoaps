@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class Estabelecimento(models.Model):
-	user = models.OneToOneField(User, blank=True, null=True)
+	user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
 	nome = models.CharField(max_length=100, unique=True)
 	slug = models.SlugField(max_length=100, blank=True, editable=False)
 	

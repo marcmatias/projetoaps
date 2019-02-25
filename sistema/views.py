@@ -12,25 +12,25 @@ from rest_framework import generics
 from .serializers import *
 # User Create 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-
-# Logar usuario automaticamente apos criacao do mesmo
-# from django.contrib.auth import login, authenticate
-
-# Fim de alterar usuário
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class IndexListView(generic.TemplateView):
 	template_name = 'sistema/index.html'
 
-
-class ChartListView(generic.TemplateView):
+class ChartListView(LoginRequiredMixin, generic.TemplateView):
 	template_name = 'sistema/chart.html'
+	def authenticated(self, user):
+		return self.filter(user=user)
 	def get_context_data(self, **kwargs):
 		context = {}
-		context['salas'] = Sala.objects.all()
+		if self.request.user.username == "admin": context['salas'] = Sala.objects.all()
+		else: context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
 		return super().get_context_data(**context)
 	def post(self, request):
 		context = {}
-		context['salas'] = Sala.objects.all()
+		if self.request.user.username == "admin": context['salas'] = Sala.objects.all()
+		else: context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
 		context['select_sala'] = request.POST['select_sala']
 		context['sala'] = Sala.objects.get(slug=context['select_sala'])
 		# Gráfico de Consumo diário
@@ -61,11 +61,11 @@ class ChartListView(generic.TemplateView):
 
 # CRUD Estabelecimento
 
-class EstabelecimentoListView(generic.ListView):
+class EstabelecimentoListView(LoginRequiredMixin, generic.ListView):
     model = Estabelecimento
     template_name = 'gerenciamento/listar/estabelecimento_listar.html'
 
-class EstabelecimentoCreateView(generic.CreateView):
+class EstabelecimentoCreateView(LoginRequiredMixin, generic.CreateView):
 	model = Estabelecimento
 	template_name = 'gerenciamento/cadastrar.html'
 	fields = ['nome', 'user']
@@ -77,7 +77,7 @@ class EstabelecimentoCreateView(generic.CreateView):
 		context['breadcrumb_link'] = "estabelecimento_listar"
 		return super().get_context_data(**context)
 
-class EstabelecimentoUpdateView(generic.UpdateView):
+class EstabelecimentoUpdateView(LoginRequiredMixin, generic.UpdateView):
 	model = Estabelecimento
 	template_name = 'gerenciamento/editar.html'
 	fields = ['nome', 'user']
@@ -89,7 +89,7 @@ class EstabelecimentoUpdateView(generic.UpdateView):
 		context['breadcrumb_link'] = "estabelecimento_listar"
 		return super().get_context_data(**context)
 
-class EstabelecimentoDeleteView(generic.DeleteView):
+class EstabelecimentoDeleteView(LoginRequiredMixin, generic.DeleteView):
 	model = Estabelecimento
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:estabelecimento_listar')
@@ -105,11 +105,11 @@ class EstabelecimentoDeleteView(generic.DeleteView):
 
 # CRUD PRÉDIOS
 
-class PredioListView(generic.ListView):
+class PredioListView(LoginRequiredMixin, generic.ListView):
     model = Predio
     template_name = 'gerenciamento/listar/predio_listar.html'
 
-class PredioCreateView(generic.CreateView):
+class PredioCreateView(LoginRequiredMixin, generic.CreateView):
 	model = Predio
 	template_name = 'gerenciamento/cadastrar.html'
 	fields = ['estabelecimento', 'nome']
@@ -121,7 +121,7 @@ class PredioCreateView(generic.CreateView):
 		context['breadcrumb_link'] = "predio_listar"
 		return super().get_context_data(**context)
 
-class PredioUpdateView(generic.UpdateView):
+class PredioUpdateView(LoginRequiredMixin, generic.UpdateView):
 	model = Predio
 	template_name = 'gerenciamento/editar.html'
 	fields = ['estabelecimento', 'nome']
@@ -132,7 +132,7 @@ class PredioUpdateView(generic.UpdateView):
 		context['breadcrumb_link'] = "predio_listar"
 		return super().get_context_data(**context)
 
-class PredioDeleteView(generic.DeleteView):
+class PredioDeleteView(LoginRequiredMixin, generic.DeleteView):
 	model = Predio
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:predio_listar')
@@ -145,11 +145,11 @@ class PredioDeleteView(generic.DeleteView):
 
 # CRUD SALAS
 
-class SalaListView(generic.ListView):
+class SalaListView(LoginRequiredMixin, generic.ListView):
     model = Sala
     template_name = 'gerenciamento/listar/sala_listar.html'
 
-class SalaCreateView(generic.CreateView):
+class SalaCreateView(LoginRequiredMixin, generic.CreateView):
 	model = Sala
 	template_name = 'gerenciamento/cadastrar.html'
 	# fields = ['predio', 'nome']
@@ -163,7 +163,7 @@ class SalaCreateView(generic.CreateView):
 		context['breadcrumb_link'] = "sala_listar"
 		return super().get_context_data(**context)
 
-class SalaUpdateView(generic.UpdateView):
+class SalaUpdateView(LoginRequiredMixin, generic.UpdateView):
 	model = Sala
 	template_name = 'gerenciamento/editar.html'
 	fields = ['estabelecimento', 'predio', 'nome']
@@ -175,7 +175,7 @@ class SalaUpdateView(generic.UpdateView):
 		context['breadcrumb_link'] = "sala_listar"
 		return super().get_context_data(**context)
 
-class SalaDeleteView(generic.DeleteView):
+class SalaDeleteView(LoginRequiredMixin, generic.DeleteView):
 	model = Sala
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:sala_listar')
@@ -188,11 +188,11 @@ class SalaDeleteView(generic.DeleteView):
 
 # CRUD consumo
 
-class ConsumoListView(generic.ListView):
+class ConsumoListView(LoginRequiredMixin, generic.ListView):
     model = Consumo
     template_name = 'gerenciamento/listar/consumo_listar.html'
 
-class ConsumoCreateView(generic.CreateView):
+class ConsumoCreateView(LoginRequiredMixin, generic.CreateView):
 	model = Consumo
 	template_name = 'gerenciamento/cadastrar.html'
 	form_class = ConsumoForm
@@ -209,7 +209,7 @@ class ConsumoCreateView(generic.CreateView):
 	# 	form.fields['data'].widget.attrs.update({'class': 'datepicker'})
 	# 	return form
 
-class ConsumoUpdateView(generic.UpdateView):
+class ConsumoUpdateView(LoginRequiredMixin, generic.UpdateView):
 	model = Consumo
 	template_name = 'gerenciamento/editar.html'
 	form_class = ConsumoForm
@@ -221,7 +221,7 @@ class ConsumoUpdateView(generic.UpdateView):
 		return super().get_context_data(**context)
 
 
-class ConsumoDeleteView(generic.DeleteView):
+class ConsumoDeleteView(LoginRequiredMixin, generic.DeleteView):
 	model = Consumo
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:consumo_listar')
@@ -234,11 +234,11 @@ class ConsumoDeleteView(generic.DeleteView):
 
 # CRUD SALAS
 
-class UserListView(generic.ListView):
+class UserListView(LoginRequiredMixin, generic.ListView):
     model = User
     template_name = 'gerenciamento/listar/user_listar.html'
 
-class UserCreateView(FormView):
+class UserCreateView(LoginRequiredMixin, FormView):
     form_class = UserCreationForm
     template_name = 'gerenciamento/cadastrar.html'
 
@@ -259,7 +259,7 @@ class UserCreateView(FormView):
         context['breadcrumb_link'] = "user_listar"
         return super().get_context_data(**context)
 
-class UserUpdateView(generic.UpdateView):
+class UserUpdateView(LoginRequiredMixin, generic.UpdateView):
 	model = User
 	template_name = 'gerenciamento/editar.html'
 	fields = ['first_name', 'last_name', 'username', 'email']
@@ -270,7 +270,7 @@ class UserUpdateView(generic.UpdateView):
 		context['breadcrumb_link'] = "user_listar"
 		return super().get_context_data(**context)
 
-class UserDeleteView(generic.DeleteView):
+class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
 	model = User
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:user_listar')
