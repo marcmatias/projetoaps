@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  Lista de Estabelecimentos Cadastrados
+  Lista de users Cadastrados
 {% endblock %}
 
 {% block content %}
@@ -11,38 +11,46 @@
       <li class="breadcrumb-item">
         <a href="#">Dashboard</a>
       </li>
-      <li class="breadcrumb-item active">Tabela Estabelecimento</li>
+      <li class="breadcrumb-item active">Tabela User</li>
     </ol>
     <!-- Example DataTables Card-->
 
   <div class="card mb-3">
     <div class="card-header">
-      <i class="fa fa-table"></i> Tabela Estabelecimentos</div>
+      <i class="fa fa-table"></i> Tabela Users</div>
     <div class="card-body">
       <div style="margin-left:15px">
-        <a href="{% url 'sistema:estabelecimento_cadastrar' %}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Novo</a>
+          <a href="{% url 'sistema:user_cadastrar' %}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Nova</a>
       </div><br>
 
       <div class="table-responsive">
         <table class="table table-bordered table-striped table-bordered nowrap text-center" id="dataTable" width="100%" cellspacing="0">
           <thead class="thead-inverse">
               <tr>
-                <th>Nome</th>
+                <th>Username</th>
+                <th>Last Login</th>
+                <th>Data de Criação</th>
                 <th>Ação</th>
               </tr>
           </thead>
           <tbody>
-            {% for estabelecimento in estabelecimento_list %}
+            {% for user in user_list %}
               <tr>
-                <td>{{ estabelecimento.nome }}</td>
+                <td>{{ user.username }}</td>
+                {% if user.last_login == None %}
+                  <td>Usuário nunca logou</td>
+                {% else %}
+                  <td>{{ user.last_login }}</td>
+                {% endif %}
+                <td>{{ user.date_joined }}</td>
                 <td>
-                  <a href="{% url 'sistema:estabelecimento_editar' estabelecimento.slug %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                  <a href="{% url 'sistema:estabelecimento_deletar' estabelecimento.slug  %}" class="btn btn-danger ml-1"><i class="fa fa-trash-o"></i></a>
+                    <a href="{% url 'sistema:user_editar' user.pk %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <a href="{% url 'sistema:user_deletar' user.pk  %}" class="btn btn-danger ml-1"><i class="fa fa-trash-o"></i></a>
                 </td>
               </tr>
             {% empty %}
               <tr>
-                <td colspan="3" class="text-center">Sem Estabelecimentos</td>
+                <td colspan="4" class="text-center">Sem users</td>
               </tr>
             {% endfor %}
           </tbody>

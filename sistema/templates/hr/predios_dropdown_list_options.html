@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for predio in predios %}
+  <option value="{{ predio.pk }}">{{ predio.nome }}</option>
+{% endfor %}

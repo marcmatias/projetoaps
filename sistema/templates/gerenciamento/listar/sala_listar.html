@@ -29,6 +29,7 @@
                 <tr>
                   <th>Nome</th>
                   <th>Prédio</th>
+                  <th>Estabelecimento</th>
                   <th>Ação</th>
                 </tr>
             </thead>
@@ -37,6 +38,7 @@
                 <tr>
                   <td>{{ sala.nome }}</td>
                   <td>{{ sala.predio }}</td>
+                  <td>{{ sala.estabelecimento }}</td>
                   <td>
                       <a href="{% url 'sistema:sala_editar' sala.slug %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                       <a href="{% url 'sistema:sala_deletar' sala.slug  %}" class="btn btn-danger ml-1"><i class="fa fa-trash-o"></i></a>
@@ -44,7 +46,7 @@
                 </tr>
               {% empty %}
                 <tr>
-                  <td colspan="7" class="text-center">Sem Salas Cadastradas</td>
+                  <td colspan="4" class="text-center">Sem Salas Cadastradas</td>
                 </tr>
               {% endfor %}
             </tbody>

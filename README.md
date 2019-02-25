@@ -1,8 +1,38 @@
-# ProjetoAPS
+# Projeto Integrador ADM
 
-Este é um projeto em feito para a cadeira de Análise de Projetos e Sistemas do cuso de Sistemas Para Internet UNIPÊ
+## API REST
 
-## Iniciando
+#### Consulta e criação de Salas no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/salas
+
+#### Edição e exclusão de consumos de Salas no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/salasdetalhe/id
+
+id = chave primária da sala que se quer editar ou deletar, substitua por numeral inteiro
+
+ex:
+  http://marcmatias.pythonanywhere.com/salasdetalhe/1
+
+#### Consulta e criação de Consumos Elétricos Diários no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/consumos
+
+#### Edição e exclusão de consumos de Consumos Eléticos Diários no sistema via api rest:
+
+http://marcmatias.pythonanywhere.com/consumosdetalhe/id
+
+id = chave primária de consumos elétricos diários que se quer editar ou deletar, substitua por numeral inteiro
+
+ex: 
+  http://marcmatias.pythonanywhere.com/consumosdetalhe/1
+
+## Landing Page
+
+http://marcmatias.pythonanywhere.com
+
+<!-- ## Iniciando
 
 As instruções à seguir vão lhe ajudar a montar o projeto na sua máquina e utilizar o sistema com o banco de dados padrão de testes dbsqlite3 do Django.
 
@@ -56,7 +86,7 @@ python manage.py createsuperuser
 Execute o sistema no localhost
 ```
 python manage.py runserver
-```
+``` -->
 <!--
 ## Running the tests
 
@@ -96,13 +126,13 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). -->
 
-## Autores
+## Autores Versões Recentes
 
-* **Alexandre Silva dos Santos** - *Gerente de Projeto*
-* **Anibal de Medeiros Batista Filho** - *DBA*
-* **Ronaldo Costa Cordeiro** - *Front-End*
-* **Rodrigo Oliveira Gomes dos Santos** - *Analista*
-* **Marcel Marques** - *Back-End e Front-End* - [Github](https://github.com/marcmatias)
+* **Marcel Marques** [Github](https://github.com/marcmatias)
+* **Rodrigo Oliveira Gomes dos Santos**
+* **Ronaldo Costa Cordeiro**
+
+
 
 <!-- See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project. -->
 
