@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-+!@p#e4*2)$)qxwbs&e9b!a+_1ujf^(0qj3v^cg#bitihe9qa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['marcmatias.pythonanywhere.com']
 
 
 # Application definition
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     #Apps
     'sistema',
     'widget_tweaks',
+    #API
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = '/home/marcmatias/ECOmanager/projetoaps/static'
 STATIC_URL = '/static/'
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 STATICFILES_DIRS = (

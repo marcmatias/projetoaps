@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+	<!-- Breadcrumbs-->
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="{% url 'sistema:chart' %}">Dashboard</a>
+		</li>
+	</ol>
+
+	<div class="card mb-3">
+		<div class="card-body">
+			<form method="POST" action="{% url 'sistema:chart' %}">
+				{% csrf_token %}
+				<div class="form-group">
+			    <label for="exampleSelect1">Geração de gráfico:</label>
+			    <select class="form-control" name="select_sala" id="select_sala" onchange='if(this.value != null) { this.form.submit(); }'>
+						{% if not select_sala %}
+								<option value="null" selected disabled> -- Selecione uma sala --</option>
+						{% else %}
+								<option value="null" disabled> -- Selecione uma sala --</option>
+								<option value="{{ sala.slug }}" selected>{{ sala.predio }} - {{ sala.nome }}</option>
+						{% endif %}
+						{% for object in salas %}
+							{% if object != sala %}
+								<option value="{{ object.slug }}">{{ object.predio }} - {{ object.nome }}</option>
+							{% endif %}
+						{% endfor %}
+			    </select>
+			  </div>
+				<!-- <button type="submit" name="button" class="btn btn-primary" onclick="return FunctionSelect()" >Gerar</button> -->
+			</form>
+		</div>
+	</div>
+
+	<!-- Area Chart Example-->
+	<div class="card mb-3">
+		<div class="card-header">
+			<i class="fa fa-area-chart"></i> Gráfico de consumo elétrico diário</div>
+		<div class="card-body">
+			<canvas id="myAreaChart" width="100%" height="30"></canvas>
+		</div>
+		<div class="card-footer small text-muted">&nbsp;</div>	</div>
+	<div class="row">
+		<div class="col-lg-9">
+			<!-- Example Bar Chart Card-->
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-bar-chart"></i> Gráfico de Histórico de Consumo Mensal</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-8 my-auto">
+							<canvas id="myBarChart" width="100" height="50"></canvas>
+						</div>
+						<div class="col-sm-4 text-center my-auto">
+							<div class="h4 mb-0 text-primary">R$ {{ preco_last_month }}</div>
+							<div class="small text-muted">Valor último Mês</div>
+							<hr>
+							<div class="h4 mb-0 text-warning">R$ {{ preco_2last_month }}</div>
+							<div class="small text-muted">Valor Penúltimo Mês</div>
+							<hr>
+							<div class="h4 mb-0 text-success">R$ {{ preco_3last_month }}</div>
+							<div class="small text-muted">Valor Antepenúltimo Mês</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer small text-muted">&nbsp;</div>
+			</div>
+		</div>
+
+		<!-- Example Pie Chart Card-->
+
+		<!-- <div class="col-lg-3">
+			<div class="card ">
+				<div class="card-header">
+					<i class="fa fa-pie-chart"></i> Gráfico Pizza Exemplo</div>
+					<div class="card-body">
+						<canvas id="myPieChart" width="100%" height="100">&nbsp;</canvas>
+					</div>
+					<div class="card-footer small text-muted">&nbsp;</div>
+				</div>
+		</div> -->
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% load l10n %}
+{% block javascript %}
+
+<script type="text/javascript">
+	function FunctionSelect() {
+		if(document.getElementById("select_sala").value == "null"){
+			alert("Selecione uma sala");
+			return false;
+		}
+		return true;
+	}
+	// -- Area Chart Example
+	var ctx = document.getElementById("myAreaChart");
+	var myLineChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: [
+				{% for consumos in consumo %}
+					'{{ consumos.data|date:" d/m/y" }}',
+				{% endfor %}
+			],
+			datasets: [{
+				label: "kwh",
+				lineTension: 0.3,
+				backgroundColor: "rgba(2,117,216,0.2)",
+				borderColor: "rgba(2,117,216,1)",
+				pointRadius: 5,
+				pointBackgroundColor: "rgba(2,117,216,1)",
+				pointBorderColor: "rgba(255,255,255,0.8)",
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(2,117,216,1)",
+				pointHitRadius: 20,
+				pointBorderWidth: 2,
+				data: [
+					{% localize off %}
+						{% for consumos in consumo %}
+							'{{ consumos.kwh }}',
+						{% endfor %}
+					{% endlocalize %}
+				],
+			}],
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					time: {
+						unit: 'date'
+					},
+					gridLines: {
+						display: false
+					},
+					ticks: {
+						maxTicksLimit: 7
+					}
+				}],
+				yAxes: [{
+					ticks: {
+						min: 0,
+						max: 40000,
+						maxTicksLimit: 5
+					},
+					gridLines: {
+						color: "rgba(0, 0, 0, .125)",
+					}
+				}],
+			},
+			legend: {
+				display: false
+			}
+		}
+	});
+	// -- Bar Chart Example
+	var ctx = document.getElementById("myBarChart");
+	var myLineChart = new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+	    labels: [
+	    {% for mes in meses %}
+	    	"{{ mes }}",
+	    {% endfor %}
+	    ],
+	    datasets: [{
+	      label: "Consumo",
+	      backgroundColor: "rgba(2,117,216,1)",
+	      borderColor: "rgba(2,117,216,1)",
+	      data: [
+	      {% localize off %}
+			{% for consumo in sala_consumo %}
+				{{ consumo }},
+			{% endfor %}
+		  {% endlocalize %}
+	      ],
+	    }],
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        time: {
+	          unit: 'month'
+	        },
+	        gridLines: {
+	          display: false
+	        },
+	        ticks: {
+	          maxTicksLimit: 6
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          min: 0,
+	          max: 100000,
+	          maxTicksLimit: 5
+	        },
+	        gridLines: {
+	          display: true
+	        }
+	      }],
+	    },
+	    legend: {
+	      display: false
+	    }
+	  }
+	});
+</script>
+{% endblock %}
