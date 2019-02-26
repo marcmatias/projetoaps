@@ -25,7 +25,7 @@ SECRET_KEY = '-+!@p#e4*2)$)qxwbs&e9b!a+_1ujf^(0qj3v^cg#bitihe9qa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['marcmatias.pythonanywhere.com']
+ALLOWED_HOSTS = ['marcmatias.pythonanywhere.com', 'localhost']
 
 
 # Application definition
@@ -133,4 +133,4 @@ STATICFILES_DIRS = (
 
 LOGIN_URL="/login/"
 LOGOUT_URL="/logout/"
-LOGIN_REDIRECT_URL="/chart"
+LOGIN_REDIRECT_URL = '/auth/logged_in'

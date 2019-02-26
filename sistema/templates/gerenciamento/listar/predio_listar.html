@@ -37,7 +37,7 @@
               {% for predio in predio_list %}
                 <tr>
                   <td>{{ predio.nome }}</td>
-                  <td>Unipê</td>
+                  <td>{{ predio.estabelecimento }}</td>
                   <td>
                     <a href="{% url 'sistema:predio_editar' predio.slug %}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                     <a href="{% url 'sistema:predio_deletar' predio.slug  %}" class="btn btn-danger ml-1"><i class="fa fa-trash-o"></i></a>
