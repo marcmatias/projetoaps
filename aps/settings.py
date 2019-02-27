@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-+!@p#e4*2)$)qxwbs&e9b!a+_1ujf^(0qj3v^cg#bitihe9qa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['marcmatias.pythonanywhere.com', 'localhost']
+ALLOWED_HOSTS = ['marcmatias.pythonanywhere.com']
 
 
 # Application definition
@@ -133,4 +133,4 @@ STATICFILES_DIRS = (
 
 LOGIN_URL="/login/"
 LOGOUT_URL="/logout/"
-LOGIN_REDIRECT_URL = '/auth/logged_in'
+LOGIN_REDIRECT_URL="/chart"
