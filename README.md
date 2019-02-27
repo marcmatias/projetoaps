@@ -1,4 +1,4 @@
-# Projeto Integrador ADM
+# Projeto ECOManager
 
 ## API REST
 
