@@ -39,17 +39,17 @@
 	<!-- Area Chart Example-->
 	<div class="card mb-3">
 		<div class="card-header">
-			<i class="fa fa-area-chart"></i> Gráfico de consumo elétrico diário</div>
+			<i class="fa fa-area-chart"></i> Gráfico de consumo elétrico últimos 60 dias</div>
 		<div class="card-body">
 			<canvas id="myAreaChart" width="100%" height="30"></canvas>
 		</div>
 		<div class="card-footer small text-muted">&nbsp;</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-9">
+		<div class="col-lg-12">
 			<!-- Example Bar Chart Card-->
 
-			<!-- <div class="card mb-3">
+			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-bar-chart"></i> Gráfico de Histórico de Consumo Mensal</div>
 				<div class="card-body">
@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<div class="card-footer small text-muted">&nbsp;</div>
-			</div> -->
+			</div>
 		</div>
 
 		<!-- Example Pie Chart Card-->
@@ -84,8 +84,8 @@
 					</div>
 					<div class="card-footer small text-muted">&nbsp;</div>
 				</div>
-		</div> -->
-	</div>
+		</div>
+	</div> -->
 </div>
 
 {% endblock %}
@@ -108,8 +108,8 @@
 		type: 'line',
 		data: {
 			labels: [
-				{% for consumos in consumo %}
-					'{{ consumos.data|date:" d/m/y" }}',
+				{% for day in 30_days.final_data %}
+					'{{ day|date:" d/m/y" }}',
 				{% endfor %}
 			],
 			datasets: [{
@@ -126,8 +126,8 @@
 				pointBorderWidth: 2,
 				data: [
 					{% localize off %}
-						{% for consumos in consumo %}
-							'{{ consumos.kwh }}',
+						{% for consumo in 30_days.final_data_consumo %}
+							'{{ consumo }}',
 						{% endfor %}
 					{% endlocalize %}
 				],
@@ -163,56 +163,56 @@
 		}
 	});
 	// -- Bar Chart Example
-	// var ctx = document.getElementById("myBarChart");
-	// var myLineChart = new Chart(ctx, {
-	//   type: 'bar',
-	//   data: {
-	//     labels: [
-	//     {% for mes in meses %}
-	//     	"{{ mes }}",
-	//     {% endfor %}
-	//     ],
-	//     datasets: [{
-	//       label: "Consumo",
-	//       backgroundColor: "rgba(2,117,216,1)",
-	//       borderColor: "rgba(2,117,216,1)",
-	//       data: [
-	//       {% localize off %}
-	// 		{% for consumo in sala_consumo %}
-	// 			{{ consumo }},
-	// 		{% endfor %}
-	// 	  {% endlocalize %}
-	//       ],
-	//     }],
-	//   },
-	//   options: {
-	//     scales: {
-	//       xAxes: [{
-	//         time: {
-	//           unit: 'month'
-	//         },
-	//         gridLines: {
-	//           display: false
-	//         },
-	//         ticks: {
-	//           maxTicksLimit: 6
-	//         }
-	//       }],
-	//       yAxes: [{
-	//         ticks: {
-	//           min: 0,
-	//           max: 100000,
-	//           maxTicksLimit: 5
-	//         },
-	//         gridLines: {
-	//           display: true
-	//         }
-	//       }],
-	//     },
-	//     legend: {
-	//       display: false
-	//     }
-	//   }
-	// });
+	var ctx = document.getElementById("myBarChart");
+	var myLineChart = new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+	    labels: [
+	    {% for mes in meses %}
+	    	"{{ mes }}",
+	    {% endfor %}
+	    ],
+	    datasets: [{
+	      label: "Consumo",
+	      backgroundColor: "rgba(2,117,216,1)",
+	      borderColor: "rgba(2,117,216,1)",
+	      data: [
+	      {% localize off %}
+					{% for consumo in sala_consumo %}
+						{{ consumo }},
+					{% endfor %}
+		  	{% endlocalize %}
+	      ],
+	    }],
+	  },
+	  options: {
+	    scales: {
+	      xAxes: [{
+	        time: {
+	          unit: 'month'
+	        },
+	        gridLines: {
+	          display: false
+	        },
+	        ticks: {
+	          maxTicksLimit: 6
+	        }
+	      }],
+	      yAxes: [{
+	        ticks: {
+	          min: 0,
+	          max: 140000,
+	          maxTicksLimit: 7
+	        },
+	        gridLines: {
+	          display: true
+	        }
+	      }],
+	    },
+	    legend: {
+	      display: false
+	    }
+	  }
+	});
 </script>
 {% endblock %}
