@@ -13,8 +13,8 @@ from .serializers import *
 # User Create 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import DetailView
-
-
+import arrow
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class IndexListView(generic.TemplateView):
@@ -26,17 +26,19 @@ class ChartListView(generic.TemplateView):
 		return self.filter(user=user)
 	def get_context_data(self, **kwargs):
 		context = {}
-		if self.request.user.username == "admin": context['salas'] = Sala.objects.all()
-		else: context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
+		if self.request.user.username == "admin": 
+			context['salas'] = Sala.objects.all()
+		else: 
+			context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
 		return super().get_context_data(**context)
 	def post(self, request):
 		context = {}
-		if self.request.user.username == "admin": context['salas'] = Sala.objects.all()
-		else: context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
+		if self.request.user.username == "admin":
+			context['salas'] = Sala.objects.all()
+		else: 
+			context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
 		context['select_sala'] = request.POST['select_sala']
 		context['sala'] = Sala.objects.get(slug=context['select_sala'])
-		# Gráfico de Consumo diário
-		context['consumo'] = Consumo.objects.filter(sala=context['sala']).order_by('data')
 		# Gráfico de histórico de consumo mensal
 		month_before = (datetime.utcnow().replace(day=1) - timedelta(days=1)).replace(day=1)
 		
@@ -47,7 +49,7 @@ class ChartListView(generic.TemplateView):
 			meses[mes_name] = month
 			month_before = month			
 		context['meses'] = meses
-
+		
 		sala_consumo = []
 		for x, y in meses.items():
 			consumo_mes_anterior = sum(Consumo.kwh for Consumo in 
@@ -59,7 +61,28 @@ class ChartListView(generic.TemplateView):
 		context['preco_last_month'] = (next(it) / 100) * 2
 		context['preco_2last_month'] = (next(it) / 100) * 2
 		context['preco_3last_month'] = (next(it) / 100) * 2
+		context['30_days'] = self.thirty_day(context['sala'])
 		return render(request, self.template_name, context)
+	def thirty_day(self, sala, **kwargs):
+		context = {}
+		
+		final_data = []
+		final_data_consumo = []
+
+		date = arrow.now()
+		for day in range(1, 60):
+			try:
+				consumos = Consumo.objects.get(sala=sala, data=date.datetime)
+				final_data_consumo.insert(0, consumos.kwh)
+			except ObjectDoesNotExist:
+				consumos = 0
+				final_data_consumo.insert(0, consumos)
+			data = date.datetime
+			final_data.insert(0, data)
+			date = date.replace(days=-1)
+		context['final_data'] = final_data
+		context['final_data_consumo'] = final_data_consumo
+		return context
 
 # CRUD Estabelecimento
 

@@ -133,4 +133,4 @@ STATICFILES_DIRS = (
 
 LOGIN_URL="/login/"
 LOGOUT_URL="/logout/"
-LOGIN_REDIRECT_URL = '/auth/logged_in'
+LOGIN_REDIRECT_URL = '/chart'

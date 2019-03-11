@@ -72,7 +72,7 @@ class Consumo(models.Model):
 		super(Consumo, self).save(*args, **kwargs)
 
 	def __str__(self):
-		return ("Sala: %s | Data: %s" %(self.sala.nome, self.data))
+		return ("Sala: %s | Data: %s | Consumo %s" %(self.sala.nome, self.data, self.kwh))
 
 	class Meta:
 		unique_together = (('sala', 'data'),)
