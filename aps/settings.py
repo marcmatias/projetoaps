@@ -133,8 +133,6 @@ STATICFILES_DIRS = (
 
 LOGIN_URL="/login/"
 LOGOUT_URL="/logout/"
-<<<<<<< HEAD
+
 LOGIN_REDIRECT_URL="/chart"
-=======
-LOGIN_REDIRECT_URL = '/chart'
->>>>>>> 5082104551a480508cef48890ed8288ca268eb10
+
