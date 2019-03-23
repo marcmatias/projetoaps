@@ -1,4 +1,7 @@
+arrow==0.13.1
 Django==2.0.5
 django-widget-tweaks==1.4.2
 djangorestframework==3.8.2
+python-dateutil==2.8.0
 pytz==2018.4
+six==1.12.0
