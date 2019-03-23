@@ -7,7 +7,7 @@ class ConsumoSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
         model = Consumo
-        fields = ('id', 'predio', 'sala', 'sala', 'slug', 'kwh', 'data')
+        fields = ('id', 'predio', 'sala', 'sala', 'slug', 'kwh')
         read_only_fields = ('id', 'slug')
 
 

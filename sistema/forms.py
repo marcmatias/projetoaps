@@ -28,6 +28,7 @@ class ConsumoForm(forms.ModelForm):
     # Função para funcionalmento de select ajax Predio e Sala
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['data'].widget.attrs['readonly'] = True
         # Sala
         self.fields['sala'].queryset = Sala.objects.none()
         
