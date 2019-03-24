@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-+!@p#e4*2)$)qxwbs&e9b!a+_1ujf^(0qj3v^cg#bitihe9qa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['marcmatias.pythonanywhere.com']
 
