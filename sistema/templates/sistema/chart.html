@@ -5,11 +5,11 @@
 
 <div class="container-fluid">
 	<!-- Breadcrumbs-->
-	<ol class="breadcrumb">
+	<!-- <ol class="breadcrumb">
 		<li class="breadcrumb-item">
 			<a href="{% url 'sistema:chart' %}">Dashboard</a>
 		</li>
-	</ol>
+	</ol> -->
 
 	<div class="card mb-3">
 		<div class="card-body">
@@ -39,9 +39,9 @@
 	<!-- Area Chart Example-->
 	<div class="card mb-3">
 		<div class="card-header">
-			<i class="fa fa-area-chart"></i> Gráfico de consumo elétrico últimos 60 dias</div>
+			<i class="fa fa-area-chart"></i> Consumo elétrico diário (últimos 60 dias)</div>
 		<div class="card-body">
-			<canvas id="myAreaChart" width="100%" height="30"></canvas>
+			<canvas id="myAreaChart" width="100%" height="20"></canvas>
 		</div>
 		<div class="card-footer small text-muted">&nbsp;</div>
 	</div>
@@ -51,11 +51,11 @@
 
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-bar-chart"></i> Gráfico de Histórico de Consumo Mensal</div>
+					<i class="fa fa-bar-chart"></i> Histórico de consumo mensal (últimos 6 meses)</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-8 my-auto">
-							<canvas id="myBarChart" width="100" height="50"></canvas>
+							<canvas id="myBarChart" width="100" height="30"></canvas>
 						</div>
 						<div class="col-sm-4 text-center my-auto">
 							<div class="h4 mb-0 text-primary">R$ {{ preco_last_month }}</div>
@@ -75,7 +75,7 @@
 
 		<!-- Example Pie Chart Card-->
 
-		<!-- <div class="col-lg-3">
+		<div class="col-lg-3">
 			<div class="card ">
 				<div class="card-header">
 					<i class="fa fa-pie-chart"></i> Gráfico Pizza Exemplo</div>
@@ -85,7 +85,7 @@
 					<div class="card-footer small text-muted">&nbsp;</div>
 				</div>
 		</div>
-	</div> -->
+	</div>
 </div>
 
 {% endblock %}
