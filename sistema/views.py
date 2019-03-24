@@ -16,11 +16,9 @@ from .serializers import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import DetailView
 from django.core.exceptions import ObjectDoesNotExist
-
 from calendar import month_name, different_locale
-def get_month_name(month_no):
-    with different_locale('pt-br'):
-        return month_name[month_no]
+
+
 
 class IndexListView(generic.TemplateView):
 	template_name = 'sistema/index.html'
@@ -31,6 +29,10 @@ class ChartListView(generic.TemplateView):
 	def authenticated(self, user):
 		return self.filter(user=user)
 	
+	def get_month_name(self, month_no):
+		with different_locale('pt-br'):
+			return month_name[month_no]
+
 	def get_context_data(self):
 		context = {}
 		# Poulando select de acordo com usuário logado
@@ -51,26 +53,30 @@ class ChartListView(generic.TemplateView):
 		month_conunting = date.replace(day=1)
 
 		# Listando ultimos meses en relação ao atual
-		meses_lista = []
-		meses = { get_month_name(int(month_conunting.strftime("%m"))) : month_conunting}
-		meses_lista.insert(0,  get_month_name(int(month_conunting.strftime("%m")))) 
+		months_list_name = []
+		months_list_number = []
+		month_dict = {self.get_month_name(int(month_conunting.strftime("%m"))) : month_conunting}
+		months_list_name.insert(0, self.get_month_name(int(month_conunting.strftime("%m")))) 
+		months_list_number.insert(0, int(month_conunting.strftime("%m")))
 		for x in range(5):
 			month = (month_conunting - timedelta(days=1)).replace(day=1)
-			mes_name =  get_month_name(int(month.strftime("%m")))
-			meses_lista.insert(0, mes_name)
-			meses[mes_name] = month
+			month_name =  self.get_month_name(int(month.strftime("%m")))
+			months_list_name.insert(0, month_name)
+			months_list_number.insert(0, int(month.strftime("%m")))
+			month_dict[month_name] = month
 			month_conunting = month
-		context['meses'] = meses_lista
+		context['meses'] = months_list_name
+		print(months_list_number)
 		
 		# Listando consumo de salas ao longo dos meses
 		sala_consumo = []
-		for x, y in meses.items():
+		for m in months_list_number:
 			consumo_mes_anterior = sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=context['sala'],
-			 	data__month=y.strftime("%m"))))
+			 	data__month=m)))
 			sala_consumo.insert(0, consumo_mes_anterior)
 
-		context['sala_consumo'] = sala_consumo
-		it = iter(sala_consumo[::-1])
+		context['sala_consumo'] = sala_consumo[::-1]
+		it = iter(sala_consumo)
 		context['preco_last_month'] = (next(it) / 100) * 2
 		context['preco_2last_month'] = (next(it) / 100) * 2
 		context['preco_3last_month'] = (next(it) / 100) * 2
