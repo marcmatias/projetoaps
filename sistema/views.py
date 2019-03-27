@@ -42,7 +42,10 @@ class ChartListView(generic.TemplateView):
 	
 	def post(self, request):
 		context = {}
-		self.get_context_data()
+
+		for s in self.get_context_data().values(): salasSelect = s
+
+		context['salas'] = salasSelect
 
 		context['select_sala'] = request.POST['select_sala']
 		context['sala'] = Sala.objects.get(slug=context['select_sala'])
@@ -66,7 +69,6 @@ class ChartListView(generic.TemplateView):
 			month_dict[month_name] = month
 			month_conunting = month
 		context['meses'] = months_list_name
-		print(months_list_number)
 		
 		# Listando consumo de salas ao longo dos meses
 		sala_consumo = []
@@ -357,21 +359,33 @@ def load_predios(request):
     return render(request, 'hr/predios_dropdown_list_options.html', {'predios': predios})
 
 
-#Consumo REST API
+#Empreendimento REST API
 
-class ConsumoAPICreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of our rest api."""
-    queryset = Consumo.objects.all()
-    serializer_class = ConsumoSerializer
+class EstabelecimentoAPICreateView(generics.ListCreateAPIView):
+	"""This class defines the create behavior of our rest api."""
+	queryset = Estabelecimento.objects.all()
+	serializer_class = EstabelecimentoSerializer
 
-    def perform_create(self, serializer):
-        """Save the post data when creating a new consumo."""
-        serializer.save()
+	def perform_create(self, serializer):
+		"""Save the post data when creating a new consumo."""
+		serializer.save()
 
-class ConsumoAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+class EstabelecimentoAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Estabelecimento.objects.all()
+	serializer_class = EstabelecimentoSerializer
 
-    queryset = Consumo.objects.all()
-    serializer_class = ConsumoSerializer
+#Prédio REST API
+
+class PredioAPICreateView(generics.ListCreateAPIView):
+	queryset = Predio.objects.all()
+	serializer_class = PredioSerializer
+
+	def perform_create(self, serializer):
+		serializer.save()
+
+class PredioAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Predio.objects.all()
+	serializer_class = PredioSerializer
 
 #Sala REST API
 
@@ -385,3 +399,17 @@ class SalaAPICreateView(generics.ListCreateAPIView):
 class SalaAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Sala.objects.all()
 	serializer_class = SalaSerializer
+
+#Consumo REST API
+
+class ConsumoAPICreateView(generics.ListCreateAPIView):
+    queryset = Consumo.objects.all()
+    serializer_class = ConsumoSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class ConsumoAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Consumo.objects.all()
+    serializer_class = ConsumoSerializer

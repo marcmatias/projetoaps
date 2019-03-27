@@ -22,11 +22,11 @@
 								<option value="null" selected disabled> -- Selecione uma sala --</option>
 						{% else %}
 								<option value="null" disabled> -- Selecione uma sala --</option>
-								<option value="{{ sala.slug }}" selected>{{ sala.predio }} - {{ sala.nome }}</option>
+								<option value="{{ sala.slug }}" selected>{{ sala.estabelecimento }} - {{ sala.predio }} - {{ sala.nome }}</option>
 						{% endif %}
 						{% for object in salas %}
 							{% if object != sala %}
-								<option value="{{ object.slug }}">{{ object.predio }} - {{ object.nome }}</option>
+								<option value="{{ object.slug }}">{{ object.estabelecimento }} - {{ object.predio }} - {{ object.nome }}</option>
 							{% endif %}
 						{% endfor %}
 			    </select>

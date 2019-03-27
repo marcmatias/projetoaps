@@ -51,9 +51,17 @@ urlpatterns = [
 	# Mudança de senha Pardão Django
 	path('password-change/', auth_views.PasswordChangeView.as_view(template_name='registration/password_form.html', success_url=reverse_lazy('sistema:chart')), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'), name='password_change_done'),
-    
+
+	# EndPoints da API REST
+    path('estabelecimentos', views.EstabelecimentoAPICreateView.as_view(), name="create"),
+    path('estabelecimentos/<int:pk>', views.EstabelecimentoAPIDetailsView.as_view(), name="details"),
+
+    path('predios', views.PredioAPICreateView.as_view(), name="create"),
+    path('predios/<int:pk>', views.PredioAPIDetailsView.as_view(), name="details"),
+	   
     path('consumos', views.ConsumoAPICreateView.as_view(), name="create"),
-    path('consumosdetalhe/<int:pk>', views.ConsumoAPIDetailsView.as_view(), name="details"),
+    path('consumos/<int:pk>', views.ConsumoAPIDetailsView.as_view(), name="details"),
+
     path('salas', views.SalaAPICreateView.as_view(), name="create"),
-    path('salasdetalhe/<int:pk>', views.SalaAPIDetailsView.as_view(), name="details"),
+    path('salas/<int:pk>', views.SalaAPIDetailsView.as_view(), name="details"),
 ]
