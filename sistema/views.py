@@ -12,7 +12,7 @@ import collections
 # Rest and Serializers
 from rest_framework import generics
 from .serializers import *
-# User Create 
+# User Create
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import DetailView
 from django.core.exceptions import ObjectDoesNotExist
@@ -25,12 +25,12 @@ class IndexListView(generic.TemplateView):
 
 class ChartListView(generic.TemplateView):
 	template_name = 'sistema/chart.html'
-	
+
 	def authenticated(self, user):
 		return self.filter(user=user)
-	
+
 	def get_month_name(self, month_no):
-		with different_locale('pt-br'):
+		with different_locale('pt_BR'):
 			return month_name[month_no]
 
 	def get_context_data(self):
@@ -39,7 +39,7 @@ class ChartListView(generic.TemplateView):
 		if self.request.user.username == "admin": context['salas'] = Sala.objects.all()
 		else: context['salas'] = Sala.objects.filter(estabelecimento__user__username=self.request.user)
 		return context
-	
+
 	def post(self, request):
 		context = {}
 		self.get_context_data()
@@ -56,7 +56,7 @@ class ChartListView(generic.TemplateView):
 		months_list_name = []
 		months_list_number = []
 		month_dict = {self.get_month_name(int(month_conunting.strftime("%m"))) : month_conunting}
-		months_list_name.insert(0, self.get_month_name(int(month_conunting.strftime("%m")))) 
+		months_list_name.insert(0, self.get_month_name(int(month_conunting.strftime("%m"))))
 		months_list_number.insert(0, int(month_conunting.strftime("%m")))
 		for x in range(5):
 			month = (month_conunting - timedelta(days=1)).replace(day=1)
@@ -67,7 +67,7 @@ class ChartListView(generic.TemplateView):
 			month_conunting = month
 		context['meses'] = months_list_name
 		print(months_list_number)
-		
+
 		# Listando consumo de salas ao longo dos meses
 		sala_consumo = []
 		for m in months_list_number:
@@ -82,10 +82,10 @@ class ChartListView(generic.TemplateView):
 		context['preco_3last_month'] = (next(it) / 100) * 2
 		context['30_days'] = self.thirty_day(context['sala'])
 		return render(request, self.template_name, context)
-	
+
 	def thirty_day(self, *args):
 		context = {}
-		
+
 		final_data = []
 		final_data_consumo = []
 		date = arrow.now()
@@ -132,7 +132,7 @@ class EstabelecimentoUpdateView(generic.UpdateView):
 	template_name = 'gerenciamento/editar.html'
 	fields = ['nome', 'user']
 	success_url = reverse_lazy('sistema:estabelecimento_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar Estabelecimento"
@@ -144,7 +144,7 @@ class EstabelecimentoDeleteView(generic.DeleteView):
 	model = Estabelecimento
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:estabelecimento_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Estabelecimento"
@@ -166,7 +166,7 @@ class PredioCreateView(generic.CreateView):
 	template_name = 'gerenciamento/cadastrar.html'
 	fields = ['estabelecimento', 'nome']
 	success_url = reverse_lazy('sistema:predio_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar Prédio"
@@ -179,7 +179,7 @@ class PredioUpdateView(generic.UpdateView):
 	template_name = 'gerenciamento/editar.html'
 	fields = ['estabelecimento', 'nome']
 	success_url = reverse_lazy('sistema:predio_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar Prédio"
@@ -190,7 +190,7 @@ class PredioDeleteView(generic.DeleteView):
 	model = Predio
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:predio_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Prédio"
@@ -210,7 +210,7 @@ class SalaCreateView(generic.CreateView):
 	# fields = ['predio', 'nome']
 	form_class = SalaForm
 	success_url = reverse_lazy('sistema:sala_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['predios'] = Predio.objects.all()
@@ -224,7 +224,7 @@ class SalaUpdateView(generic.UpdateView):
 	template_name = 'gerenciamento/editar.html'
 	fields = ['estabelecimento', 'predio', 'nome']
 	success_url = reverse_lazy('sistema:sala_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['predios'] = Predio.objects.all()
@@ -236,7 +236,7 @@ class SalaDeleteView(generic.DeleteView):
 	model = Sala
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:sala_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Sala"
@@ -255,7 +255,7 @@ class ConsumoCreateView(generic.CreateView):
 	template_name = 'gerenciamento/cadastrar.html'
 	form_class = ConsumoForm
 	success_url = reverse_lazy('sistema:consumo_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar consumo"
@@ -273,7 +273,7 @@ class ConsumoUpdateView(generic.UpdateView):
 	template_name = 'gerenciamento/editar.html'
 	form_class = ConsumoForm
 	success_url = reverse_lazy('sistema:consumo_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar Consumo"
@@ -285,7 +285,7 @@ class ConsumoDeleteView(generic.DeleteView):
 	model = Consumo
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:consumo_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Consumo"
@@ -313,7 +313,7 @@ class UserCreateView(FormView):
 		# user = authenticate(username=username, password=raw_password)
 		# login(self.request, user)
 		return redirect('sistema:user_listar')
-    
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Cadastrar User"
@@ -326,7 +326,7 @@ class UserUpdateView(generic.UpdateView):
 	template_name = 'gerenciamento/editar.html'
 	fields = ['first_name', 'last_name', 'username', 'email']
 	success_url = reverse_lazy('sistema:user_listar')
-	
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Editar User"
