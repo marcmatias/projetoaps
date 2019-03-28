@@ -19,6 +19,10 @@ class Estabelecimento(models.Model):
 		self.slug = slugify(self.nome)
 		super(Estabelecimento, self).save(*args, **kwargs)
 
+	def update(self, *args, **kwargs):
+		self.slug = slugify(self.nome)
+		super(Estabelecimento, self).update(*args, **kwargs)
+
 class Predio(models.Model):
 	estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
 	nome = models.CharField(max_length=100, unique=True)
@@ -30,6 +34,10 @@ class Predio(models.Model):
 	def save(self, *args, **kwargs):
 		self.slug = slugify("%s %s" % (self.estabelecimento, self.nome))
 		super(Predio, self).save(*args, **kwargs)
+	
+	def update(self, *args, **kwargs):
+		self.slug = slugify("%s %s" % (self.estabelecimento, self.nome))
+		super(Predio, self).update(*args, **kwargs)
 
 	def __str__(self):
 		return self.nome
@@ -47,6 +55,10 @@ class Sala(models.Model):
 		self.slug = slugify("%s %s" %(self.predio, self.nome))
 		super(Sala, self).save(*args, **kwargs)
 
+	def update(self, *args, **kwargs):
+		self.slug = slugify("%s %s" %(self.predio, self.nome))
+		super(Sala, self).update(*args, **kwargs)
+
 	def __str__(self):
 		return self.nome
 
@@ -63,6 +75,12 @@ class Consumo(models.Model):
 			raise Exception("Você não pode deixar estes campos nulos")
 		self.slug = slugify("%s %s %s" %(self.predio, self.sala.nome, self.data))
 		super(Consumo, self).save(*args, **kwargs)
+
+	def update(self, *args, **kwargs):
+		if not self.predio or not self.sala or not self.estabelecimento:
+			raise Exception("Você não pode deixar estes campos nulos")
+		self.slug = slugify("%s %s %s" %(self.predio, self.sala.nome, self.data))
+		super(Consumo, self).update(*args, **kwargs)
 
 	class Meta:
 		unique_together = (("sala", "data"),)
