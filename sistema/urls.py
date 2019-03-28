@@ -64,4 +64,6 @@ urlpatterns = [
 
     path('salas', views.SalaAPICreateView.as_view(), name="create"),
     path('salas/<int:pk>', views.SalaAPIDetailsView.as_view(), name="details"),
+
+	path('consumodetalhado/<slug:slug>', views.ConsumoDetalhado.as_view(), name="create"),
 ]
