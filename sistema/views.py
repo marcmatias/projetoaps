@@ -484,5 +484,5 @@ def thirty_day(sala):
 		return context
 
 def get_month_name(month_no):
-	with different_locale('pt-br'):
-		return month_name[month_no]
+    with different_locale('pt_BR'):
+        return month_name[month_no]
