@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -13,11 +14,11 @@
 
 	<div class="card mb-3">
 		<div class="card-body">
-			<form method="POST" action="{% url 'sistema:chart' %}">
+			{% comment %} <form method="POST" action="{% url 'sistema:chart' %}"> {% endcomment %}
 				{% csrf_token %}
 				<div class="form-group">
 			    <label for="exampleSelect1">Geração de gráfico:</label>
-			    <select class="form-control" name="select_sala" id="select_sala" onchange='if(this.value != null) { this.form.submit(); }'>
+			    <select class="form-control" name="select_sala" id="select_sala" onchange="functionSelect()">
 						{% if not select_sala %}
 								<option value="null" selected disabled> -- Selecione uma sala --</option>
 						{% else %}
@@ -32,12 +33,12 @@
 			    </select>
 			  </div>
 				<!-- <button type="submit" name="button" class="btn btn-primary" onclick="return FunctionSelect()" >Gerar</button> -->
-			</form>
+			{% comment %} </form> {% endcomment %}
 		</div>
 	</div>
 
 	<!-- Area Chart Example-->
-	<div class="card mb-3">
+	<div class="card mb-3 hiddenJS" style="visibility:hidden">
 		<div class="card-header">
 			<i class="fa fa-area-chart"></i> Consumo elétrico diário (últimos 60 dias)</div>
 		<div class="card-body">
@@ -45,7 +46,7 @@
 		</div>
 		<div class="card-footer small text-muted">&nbsp;</div>
 	</div>
-	<div class="row">
+	<div class="row hiddenJS" style="visibility:hidden">
 		<div class="col-lg-12">
 			<!-- Example Bar Chart Card-->
 
@@ -58,13 +59,13 @@
 							<canvas id="myBarChart" width="100" height="30"></canvas>
 						</div>
 						<div class="col-sm-4 text-center my-auto">
-							<div class="h4 mb-0 text-primary">R$ {{ preco_last_month }}</div>
+							<div class="h4 mb-0 text-primary" id="ConsumptionMonthNow"></div>
 							<div class="small text-muted">Valor consumido este mês</div>
 							<hr>
-							<div class="h4 mb-0 text-warning">R$ {{ preco_2last_month }}</div>
+							<div class="h4 mb-0 text-warning" id="ConsumptionMonthBefore"></div>
 							<div class="small text-muted">Valor consumido último mês</div>
 							<hr>
-							<div class="h4 mb-0 text-success">R$ {{ preco_3last_month }}</div>
+							<div class="h4 mb-0 text-success" id="Consumption2MonthBefore"></div>
 							<div class="small text-muted">Valor consumido penúltimo mês</div>
 						</div>
 					</div>
@@ -89,131 +90,15 @@
 	</div>
 </div>
 
+<pre id="object"></pre>
+
 {% endblock %}
 
 
 {% load l10n %}
 {% block javascript %}
 
-<script type="text/javascript">
-	function FunctionSelect() {
-		if(document.getElementById("select_sala").value == "null"){
-			alert("Selecione uma sala");
-			return false;
-		}
-		return true;
-	}
-	// -- Area Chart Example
-	var ctx = document.getElementById("myAreaChart");
-	var myLineChart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: [
-				{% for day in 30_days.final_data %}
-					'{{ day|date:" d/m/y" }}',
-				{% endfor %}
-			],
-			datasets: [{
-				label: "kwh",
-				lineTension: 0.3,
-				backgroundColor: "rgba(2,117,216,0.2)",
-				borderColor: "rgba(2,117,216,1)",
-				pointRadius: 5,
-				pointBackgroundColor: "rgba(2,117,216,1)",
-				pointBorderColor: "rgba(255,255,255,0.8)",
-				pointHoverRadius: 5,
-				pointHoverBackgroundColor: "rgba(2,117,216,1)",
-				pointHitRadius: 20,
-				pointBorderWidth: 2,
-				data: [
-					{% localize off %}
-						{% for consumo in 30_days.final_data_consumo %}
-							'{{ consumo }}',
-						{% endfor %}
-					{% endlocalize %}
-				],
-			}],
-		},
-		options: {
-			scales: {
-				xAxes: [{
-					time: {
-						unit: 'date'
-					},
-					gridLines: {
-						display: false
-					},
-					ticks: {
-						maxTicksLimit: 7
-					}
-				}],
-				yAxes: [{
-					ticks: {
-						min: 0,
-						max: 5000,
-						maxTicksLimit: 9
-					},
-					gridLines: {
-						color: "rgba(0, 0, 0, .125)",
-					}
-				}],
-			},
-			legend: {
-				display: false
-			}
-		}
-	});
-	// -- Bar Chart Example
-	var ctx = document.getElementById("myBarChart");
-	var myLineChart = new Chart(ctx, {
-	  type: 'bar',
-	  data: {
-	    labels: [
-	    {% for mes in meses %}
-	    	"{{ mes }}",
-	    {% endfor %}
-	    ],
-	    datasets: [{
-	      label: "Consumo",
-	      backgroundColor: "rgba(2,117,216,1)",
-	      borderColor: "rgba(2,117,216,1)",
-	      data: [
-	      {% localize off %}
-					{% for consumo in sala_consumo %}
-						{{ consumo }},
-					{% endfor %}
-		  	{% endlocalize %}
-	      ],
-	    }],
-	  },
-	  options: {
-	    scales: {
-	      xAxes: [{
-	        time: {
-	          unit: 'month'
-	        },
-	        gridLines: {
-	          display: false
-	        },
-	        ticks: {
-	          maxTicksLimit: 6
-	        }
-	      }],
-	      yAxes: [{
-	        ticks: {
-	          min: 0,
-	          max: 140000,
-	          maxTicksLimit: 7
-	        },
-	        gridLines: {
-	          display: true
-	        }
-	      }],
-	    },
-	    legend: {
-	      display: false
-	    }
-	  }
-	});
-</script>
+
+<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script src="{% static 'js/app.js' %}"></script>
 {% endblock %}

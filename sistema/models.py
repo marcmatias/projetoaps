@@ -52,12 +52,12 @@ class Sala(models.Model):
 		unique_together = (("predio", "nome"),)
 
 	def save(self, *args, **kwargs):
-		self.slug = slugify("%s %s" %(self.predio, self.nome))
+		self.slug = slugify("%s_%s_%s" %(self.estabelecimento, self.predio, self.nome))
 		super(Sala, self).save(*args, **kwargs)
 
 	def update(self, *args, **kwargs):
-		self.slug = slugify("%s %s" %(self.predio, self.nome))
-		super(Sala, self).update(*args, **kwargs)
+		self.slug = slugify("%s_%s_%s" %(self.estabelecimento, self.predio, self.nome))
+		super(Sala, self).save(*args, **kwargs)
 
 	def __str__(self):
 		return self.nome

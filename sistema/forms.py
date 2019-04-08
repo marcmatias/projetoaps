@@ -17,7 +17,7 @@ class SalaForm(forms.ModelForm):
                 estabelecimento_id = int(self.data.get('estabelecimento'))
                 self.fields['predio'].queryset = Predio.objects.filter(estabelecimento_id=estabelecimento_id).order_by('nome')
             except (ValueError, TypeError):
-                pass  # invalid input from the client; ignore and fallback to empty City queryset
+                pass  # invalid input from the client; ignore and fallback to empty Predio queryset
         elif self.instance.pk:
             self.fields['predio'].queryset = self.instance.estabelecimento.predio_set.order_by('nome')
 
@@ -37,7 +37,7 @@ class ConsumoForm(forms.ModelForm):
                 predio_id = int(self.data.get('predio'))
                 self.fields['sala'].queryset = Sala.objects.filter(predio_id=predio_id).order_by('nome')
             except (ValueError, TypeError):
-                pass  # invalid input from the client; ignore and fallback to empty City queryset
+                pass  # invalid input from the client; ignore and fallback to empty Sala queryset
         elif self.instance.pk:
             self.fields['sala'].queryset = self.instance.predio.sala_set.order_by('nome')
         # Predio
@@ -48,6 +48,6 @@ class ConsumoForm(forms.ModelForm):
                 estabelecimento_id = int(self.data.get('estabelecimento'))
                 self.fields['predio'].queryset = Predio.objects.filter(estabelecimento_id=estabelecimento_id).order_by('nome')
             except (ValueError, TypeError):
-                pass  # invalid input from the client; ignore and fallback to empty City queryset
+                pass  # invalid input from the client; ignore and fallback to empty Predio queryset
         elif self.instance.pk:
             self.fields['predio'].queryset = self.instance.estabelecimento.predio_set.order_by('nome')

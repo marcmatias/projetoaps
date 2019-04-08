@@ -69,9 +69,9 @@
               <li>
                 <a href="{% url 'sistema:sala_listar' %}">Salas</a>
               </li>
-              <li>
+              {% comment %} <li>
                 <a href="{% url 'sistema:consumo_listar' %}">Consumo</a>
-              </li>
+              </li> {% endcomment %}
             </ul>
             {% endif %}
           </li>
@@ -156,7 +156,7 @@
       <footer class="sticky-footer">
         <div class="container">
           <div class="text-center">
-            <small>© ADM 2018</small>
+            <small>© MRR 2019</small>
           </div>
         </div>
       </footer>
@@ -183,7 +183,8 @@
         </div>
       </div>
 
-
+      <!-- ChartJS-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
       <!-- Bootstrap core JavaScript-->
       <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
       <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -201,6 +202,7 @@
 
 
       <script src="{% static 'js/scripts.js' %}"></script>
+      
 
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css">
@@ -210,13 +212,13 @@
 
       <script type="text/javascript">
         //  -- Alerta de select == null em cadastrar sala e charts sala
-        function FunctionSelect() {
+        {% comment %} function FunctionSelect() {
           if(document.getElementById("select_sala").value == "null"){
             alert("Selecione uma sala");
             return false;
           }
           return true;
-        }
+        } {% endcomment %}
         // -- Datepicker pt-br
         // $( "#id_data" ).datepicker({
         //    todayHighlight: true,

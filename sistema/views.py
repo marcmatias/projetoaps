@@ -171,6 +171,7 @@ class PredioDeleteView(generic.DeleteView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Prédio"
+		context['breadcrumb_link'] = "predio_listar"
 		return super().get_context_data(**context)
 
 # Fim do CRUD PRÉDIOS
@@ -217,56 +218,59 @@ class SalaDeleteView(generic.DeleteView):
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar Sala"
+		context['breadcrumb_link'] = "sala_listar"
 		return super().get_context_data(**context)
 
 # Fim do CRUD SALAS
 
 # CRUD consumo
 
-class ConsumoListView(generic.ListView):
-    model = Consumo
-    template_name = 'gerenciamento/listar/consumo_listar.html'
-
-class ConsumoCreateView(generic.CreateView):
-	model = Consumo
-	template_name = 'gerenciamento/cadastrar.html'
-	form_class = ConsumoForm
-	success_url = reverse_lazy('sistema:consumo_listar')
-
-	def get_context_data(self, **kwargs):
-		context = {}
-		context['title'] = "Cadastrar consumo"
-		context['breadcrumb_title'] = "Consumo"
-		context['breadcrumb_link'] = "consumo_listar"
-		return super().get_context_data(**context)
-	# Modificar field do formulário
-	# def get_form(self, form_class=None):
-	# 	form = super(ConsumoCreateView, self).get_form(form_class)
-	# 	form.fields['data'].widget.attrs.update({'class': 'datepicker'})
-	# 	return form
-
-class ConsumoUpdateView(generic.UpdateView):
-	model = Consumo
-	template_name = 'gerenciamento/editar.html'
-	form_class = ConsumoForm
-	success_url = reverse_lazy('sistema:consumo_listar')
-
-	def get_context_data(self, **kwargs):
-		context = {}
-		context['title'] = "Editar Consumo"
-		context['breadcrumb_link'] = "consumo_listar"
-		return super().get_context_data(**context)
+# class ConsumoListView(generic.ListView):
+#     model = Consumo
+#     template_name = 'gerenciamento/listar/consumo_listar.html'
 
 
-class ConsumoDeleteView(generic.DeleteView):
-	model = Consumo
-	template_name = 'gerenciamento/deletar.html'
-	success_url = reverse_lazy('sistema:consumo_listar')
+# class ConsumoCreateView(generic.CreateView):
+# 	model = Consumo
+# 	template_name = 'gerenciamento/cadastrar.html'
+# 	form_class = ConsumoForm
+# 	success_url = reverse_lazy('sistema:consumo_listar')
 
-	def get_context_data(self, **kwargs):
-		context = {}
-		context['title'] = "Deletar Consumo"
-		return super().get_context_data(**context)
+# 	def get_context_data(self, **kwargs):
+# 		context = {}
+# 		context['title'] = "Cadastrar consumo"
+# 		context['breadcrumb_title'] = "Consumo"
+# 		context['breadcrumb_link'] = "consumo_listar"
+# 		return super().get_context_data(**context)
+# 	# Modificar field do formulário
+# 	# def get_form(self, form_class=None):
+# 	# 	form = super(ConsumoCreateView, self).get_form(form_class)
+# 	# 	form.fields['data'].widget.attrs.update({'class': 'datepicker'})
+# 	# 	return form
+
+# class ConsumoUpdateView(generic.UpdateView):
+# 	model = Consumo
+# 	template_name = 'gerenciamento/editar.html'
+# 	form_class = ConsumoForm
+# 	success_url = reverse_lazy('sistema:consumo_listar')
+
+# 	def get_context_data(self, **kwargs):
+# 		context = {}
+# 		context['title'] = "Editar Consumo"
+# 		context['breadcrumb_link'] = "consumo_listar"
+# 		return super().get_context_data(**context)
+
+
+# class ConsumoDeleteView(generic.DeleteView):
+# 	model = Consumo
+# 	template_name = 'gerenciamento/deletar.html'
+# 	success_url = reverse_lazy('sistema:consumo_listar')
+
+# 	def get_context_data(self, **kwargs):
+# 		context = {}
+# 		context['title'] = "Deletar Consumo"
+# 		return super().get_context_data(**context)
+
 
 # Fim do CRUD consumo
 
@@ -314,6 +318,7 @@ class UserDeleteView(generic.DeleteView):
 	model = User
 	template_name = 'gerenciamento/deletar.html'
 	success_url = reverse_lazy('sistema:user_listar')
+
 	def get_context_data(self, **kwargs):
 		context = {}
 		context['title'] = "Deletar User"
@@ -377,112 +382,114 @@ class SalaAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
 
 #Consumo REST API
 
-class ConsumoAPICreateView(generics.ListCreateAPIView):
-    queryset = Consumo.objects.all()
-    serializer_class = ConsumoSerializer
+# class ConsumoAPICreateView(generics.ListCreateAPIView):
+#     queryset = Consumo.objects.all()
+#     serializer_class = ConsumoSerializer
 
-    def perform_create(self, serializer):
-        serializer.save()
+#     def perform_create(self, serializer):
+#         serializer.save()
 
-class ConsumoAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Consumo.objects.all()
-    serializer_class = ConsumoSerializer
+# class ConsumoAPIDetailsView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Consumo.objects.all()
+#     serializer_class = ConsumoSerializer
 
-class ConsumoDetalhado(APIView):
-	# authentication_classes = (authentication.TokenAuthentication,)
-    # permission_classes = (permissions.IsAdminUser,)
+# class ConsumoDetalhado(APIView):
+# 	# authentication_classes = (authentication.TokenAuthentication,)
+#     # permission_classes = (permissions.IsAdminUser,)
 
-	def get(self, request, format=None, *args, **kwargs):
-		context = {}
-		sala = Sala.objects.get(slug=self.kwargs['slug'])
-		# # Gráfico de histórico de consumo mensal
-		date = arrow.now()
-		# Mês atual usado como referencia para obter meses anteriores
-		month_conunting = date.replace(day=1)
+# 	def get(self, request, format=None, *args, **kwargs):
+# 		context = {}
+# 		sala = Sala.objects.get(slug=self.kwargs['slug'])
+# 		# # Gráfico de histórico de consumo mensal
+# 		date = arrow.now()
+# 		# Mês atual usado como referencia para obter meses anteriores
+# 		month_conunting = date.replace(day=1)
 
-		# Listando ultimos meses en relação ao atual
-		months_list_name = []
-		months_list_number = []
-		month_dict = {get_month_name(int(month_conunting.strftime("%m"))) : sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=sala, data__month=int(month_conunting.strftime("%m")))))}
-		months_list_name.insert(0, get_month_name(int(month_conunting.strftime("%m"))) + "/" + month_conunting.strftime("%y"))
-		months_list_number.insert(0, int(month_conunting.strftime("%m")))
-		for x in range(5):
-			month = (month_conunting - timedelta(days=1)).replace(day=1)
-			month_name = get_month_name(int(month.strftime("%m"))) + "/" + month.strftime("%y")
-			months_list_name.insert(0, month_name)
-			months_list_number.insert(0, int(month.strftime("%m")))
-			consumo_mes = sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=sala, data__month=int(month.strftime("%m")))))
-			month_dict[month_name] = consumo_mes
-			month_conunting = month
-		context['months_cons'] = month_dict
+# 		# Listando ultimos meses en relação ao atual
+# 		months_list_name = []
+# 		months_list_number = []
+# 		month_dict = {get_month_name(int(month_conunting.strftime("%m"))) : sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=sala, data__month=int(month_conunting.strftime("%m")))))}
+# 		months_list_name.insert(0, get_month_name(int(month_conunting.strftime("%m"))) + "/" + month_conunting.strftime("%y"))
+# 		months_list_number.insert(0, int(month_conunting.strftime("%m")))
+# 		for x in range(5):
+# 			month = (month_conunting - timedelta(days=1)).replace(day=1)
+# 			month_name = get_month_name(int(month.strftime("%m"))) + "/" + month.strftime("%y")
+# 			months_list_name.insert(0, month_name)
+# 			months_list_number.insert(0, int(month.strftime("%m")))
+# 			consumo_mes = sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=sala, data__month=int(month.strftime("%m")))))
+# 			month_dict[month_name] = consumo_mes
+# 			month_conunting = month
+# 		context['months_cons'] = month_dict
 
-		# Listando consumo de salas ao longo dos meses
-		sala_consumo = []
-		for m in months_list_number:
-			consumo_mes_anterior = sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=sala,
-			 	data__month=m)))
-			sala_consumo.insert(0, consumo_mes_anterior)
-
-		it = iter(sala_consumo)
-		context['price_last_month'] = ((next(it) / 100) * 2)
-		context['price_2last_month'] = ((next(it) / 100) * 2)
-		context['price_3last_month'] = ((next(it) / 100) * 2)
-		context['60_days'] = thirty_day_api(sala)
-		return Response(context)
+# 		# Listando consumo de salas ao longo dos meses
+# 		sala_consumo = []
+# 		for m in months_list_number:
+# 			consumo_mes_anterior = sum(Consumo.kwh for Consumo in (Consumo.objects.filter(sala=sala,
+# 			 	data__month=m)))
+# 			sala_consumo.insert(0, consumo_mes_anterior)
 
 
-# Geração de datas e consumos diários
+# 		it = iter(sala_consumo)
+# 		context['price_last_month'] = ((next(it) / 100) * 2)
+# 		context['price_2last_month'] = ((next(it) / 100) * 2)
+# 		context['price_3last_month'] = ((next(it) / 100) * 2)
+# 		context['60_days'] = thirty_day_api(sala)
+# 		return Response(context)
 
-def thirty_day_api(sala):
-		context = {}
 
-		data_consumo = {}
+# # Geração de datas e consumos diários
 
-		date = arrow.now()
-		for day in range(1, 60):
-			consumo = Consumo.objects.filter(sala=sala, data__date=date.datetime)
-			# Baseado na largura do array de consumos é feito a soma dos consumos diários
-			if len(consumo) > 1 :
-				consumoTotal = 0
-				for consumos in consumo:
-					consumoTotal += consumos.kwh
-				final_data_consumo = consumoTotal
-			elif len(consumo) == 1:
-				final_data_consumo = consumo[0].kwh
-			# Caso não tenha ocorrido nenhum consumo naquela data 0 será salvo no array de consumos
-			else:
-				final_data_consumo = 0
-			data_consumo[str(date.datetime.date())] = final_data_consumo
-			date = date.replace(days=-1)
-		context["date_cons"] = data_consumo
-		return context
+# def thirty_day_api(sala):
+# 	context = {}
 
-def thirty_day(sala):
-		context = {}
+# 	data_consumo = {}
 
-		final_data = []
-		final_data_consumo = []
-		date = arrow.now()
-		for day in range(1, 60):
-			consumo = Consumo.objects.filter(sala=sala, data__date=date.datetime)
-			# Baseado na largura do array de consumos é feito a soma dos consumos diários
-			if len(consumo) > 1 :
-				consumoTotal = 0
-				for consumos in consumo:
-					consumoTotal += consumos.kwh
-				final_data_consumo.insert(0, consumoTotal)
-			elif len(consumo) == 1:
-				final_data_consumo.insert(0, consumo[0].kwh)
-			# Caso não tenha ocorrido nenhum consumo naquela data 0 será salvo no array de consumos
-			else:
-				final_data_consumo.insert(0, 0)
-			data = date.datetime.date()
-			final_data.insert(0, data)
-			date = date.replace(days=-1)
-		context['final_data'] = final_data
-		context['final_data_consumo'] = final_data_consumo
-		return context
+# 	date = arrow.now()
+# 	for day in range(1, 60):
+# 		consumo = Consumo.objects.filter(sala=sala, data__date=date.datetime)
+# 		# Baseado na largura do array de consumos é feito a soma dos consumos diários
+# 		if len(consumo) > 1 :
+# 			consumoTotal = 0
+# 			for consumos in consumo:
+# 				consumoTotal += consumos.kwh
+# 			final_data_consumo = consumoTotal
+# 		elif len(consumo) == 1:
+# 			final_data_consumo = consumo[0].kwh
+# 		# Caso não tenha ocorrido nenhum consumo naquela data 0 será salvo no array de consumos
+# 		else:
+# 			final_data_consumo = 0
+# 		data_consumo[str(date.datetime.date())] = final_data_consumo
+# 		date = date.replace(days=-1)
+# 	context["date_cons"] = data_consumo
+# 	return context
 
-def get_month_name(month_no):
-    with different_locale('pt_BR'):
-        return month_name[month_no]
+# def thirty_day(sala):
+# 	context = {}
+
+# 	final_data = []
+# 	final_data_consumo = []
+# 	date = arrow.now()
+# 	for day in range(1, 60):
+# 		consumo = Consumo.objects.filter(sala=sala, data__date=date.datetime)
+# 		# Baseado na largura do array de consumos é feito a soma dos consumos diários
+# 		if len(consumo) > 1 :
+# 			consumoTotal = 0
+# 			for consumos in consumo:
+# 				consumoTotal += consumos.kwh
+# 			final_data_consumo.insert(0, consumoTotal)
+# 		elif len(consumo) == 1:
+# 			final_data_consumo.insert(0, consumo[0].kwh)
+# 		# Caso não tenha ocorrido nenhum consumo naquela data 0 será salvo no array de consumos
+# 		else:
+# 			final_data_consumo.insert(0, 0)
+# 		data = date.datetime.date()
+# 		final_data.insert(0, data)
+# 		date = date.replace(days=-1)
+# 	context['final_data'] = final_data
+# 	context['final_data_consumo'] = final_data_consumo
+# 	return context
+
+# def get_month_name(month_no):
+# 	with different_locale('pt-br'):
+# 		return month_name[month_no]
+
