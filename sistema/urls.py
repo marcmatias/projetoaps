@@ -32,10 +32,10 @@ urlpatterns = [
 	path('sala_editar_form/<slug:slug>', staff_member_required(views.SalaUpdateView.as_view()), name="sala_editar"),
 	path('sala_deletar_form/<slug:slug>', staff_member_required(views.SalaDeleteView.as_view()), name="sala_deletar"),
 	# Estabelecimento urls
-	# path('consumo_listar/', staff_member_required(views.ConsumoListView.as_view()), name="consumo_listar"),
-	# path('consumo_cadastrar/', staff_member_required(views.ConsumoCreateView.as_view()), name="consumo_cadastrar"),
-	# path('consumo_editar_form/<slug:slug>', staff_member_required(views.ConsumoUpdateView.as_view()), name="consumo_editar"),
-	# path('consumo_deletar_form/<slug:slug>', staff_member_required(views.ConsumoDeleteView.as_view()), name="consumo_deletar"),
+	path('consumo_listar/', staff_member_required(views.ConsumoListView.as_view()), name="consumo_listar"),
+	path('consumo_cadastrar/', staff_member_required(views.ConsumoCreateView.as_view()), name="consumo_cadastrar"),
+	path('consumo_editar_form/<slug:slug>', staff_member_required(views.ConsumoUpdateView.as_view()), name="consumo_editar"),
+	path('consumo_deletar_form/<slug:slug>', staff_member_required(views.ConsumoDeleteView.as_view()), name="consumo_deletar"),
 	# User urls
 	path('user_listar/', staff_member_required(views.UserListView.as_view()), name="user_listar"),
 	path('user_cadastrar/', staff_member_required(views.UserCreateView.as_view()), name="user_cadastrar"),
