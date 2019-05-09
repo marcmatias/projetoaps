@@ -21,6 +21,8 @@ from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from calendar import month_name, different_locale
+#Machine Learning
+from sklearn.linear_model import LinearRegression
 
 import json
 
@@ -61,7 +63,7 @@ class ChartListView(generic.TemplateView):
 		month_dict = {get_month_name(int(month_conunting.strftime("%m"))) : month_conunting}
 		months_list_name.insert(0, get_month_name(int(month_conunting.strftime("%m"))) + "/" + month_conunting.strftime("%y"))
 		months_list_number.insert(0, int(month_conunting.strftime("%m")))
-		for x in range(5):
+		for x in range(4):
 			month = (month_conunting - timedelta(days=1)).replace(day=1)
 			month_name = get_month_name(int(month.strftime("%m"))) + "/" + month.strftime("%y")
 			months_list_name.insert(0, month_name)
@@ -83,7 +85,27 @@ class ChartListView(generic.TemplateView):
 		context['preco_2last_month'] = (next(it) / 100) * 2
 		context['preco_3last_month'] = (next(it) / 100) * 2
 		context['30_days'] = thirty_day(context['sala'])
+
+		# Gerando previsão
+		# Preparando os dados de treino
+
+		# Vamos chamar de X os meses do ano.
+		# X = months_list_number
+		X = [[1],[2],[3],[4],[5]]
+
+		# Vamos chamar de Y os valos dos gastos de energia.
+		Y = sala_consumo
+
+		# Criando o modelo
+		modelo = LinearRegression()
+		# Treinando o modelo
+		modelo.fit(X, Y)
+		# Prevendo o valor gasto de Energia no próximo mês
+		predicao = modelo.predict([[5]],)
+		predicao = (next(it) / 100) * 2
+		context['preco_futuro'] = predicao
 		return render(request, self.template_name, context)
+
 
 # CRUD Estabelecimento
 
