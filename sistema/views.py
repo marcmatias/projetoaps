@@ -81,9 +81,9 @@ class ChartListView(generic.TemplateView):
 
 		context['sala_consumo'] = sala_consumo[::-1]
 		it = iter(sala_consumo)
-		context['preco_last_month'] = (next(it) / 100) * 2
-		context['preco_2last_month'] = (next(it) / 100) * 2
-		context['preco_3last_month'] = (next(it) / 100) * 2
+		context['preco_last_month'] = (next(it) * 0.85)
+		context['preco_2last_month'] = (next(it) * 0.85)
+		context['preco_3last_month'] = (next(it) * 0.85)
 		context['30_days'] = thirty_day(context['sala'])
 
 		
@@ -104,7 +104,7 @@ class ChartListView(generic.TemplateView):
 		modelo.fit(X, Y)
 		# Prevendo o valor gasto de Energia no próximo mês
 		predicao_1 = modelo.predict([[6]],)
-		predicao_1 = (predicao_1 / 100) * 2
+		predicao_1 = (predicao_1 * 0.85)
 		context['preco_futuro_1'] = "%.2f" % float(predicao_1)
 
 
