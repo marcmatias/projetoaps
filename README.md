@@ -128,6 +128,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Autores Versões Recentes
 
+* **Alexandre Silva**
+* **Anibal de Medeiros**
 * **Marcel Marques** [Github](https://github.com/marcmatias)
 * **Rodrigo Oliveira Gomes dos Santos**
 * **Ronaldo Costa Cordeiro**
