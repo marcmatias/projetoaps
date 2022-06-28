@@ -1,5 +1,5 @@
 -f /usr/share/pip-wheels
-arrow==0.13.1
+arrow==0.15.1
 Django==2.0.5
 django-widget-tweaks==1.4.2
 djangorestframework==3.8.2
